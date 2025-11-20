@@ -6,7 +6,7 @@ import SwiftUI
 struct TrackerApp: App {
     var body: some Scene {
         WindowGroup {
-            HabitListView()
+            HabitListView(vm: Assembly.createHabitListViewModel())
         }
     }
 }

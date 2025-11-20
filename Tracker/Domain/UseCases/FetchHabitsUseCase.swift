@@ -1,7 +1,7 @@
 import Foundation
 
 protocol FetchHabitsUseCase: AnyObject {
-    func execute() -> [Habit]
+    func execute(date: Date) -> [Habit]
 }
 
 final class FetchHabitsImplement: FetchHabitsUseCase {
@@ -11,7 +11,7 @@ final class FetchHabitsImplement: FetchHabitsUseCase {
         self.repository = repository
     }
     
-    func execute() -> [Habit] {
-        repository.fetchHabits()
+    func execute(date: Date) -> [Habit] {
+        repository.fetchHabits(date: date)
     }
 }

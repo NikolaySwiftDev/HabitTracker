@@ -2,5 +2,5 @@
 import Foundation
 
 protocol FetchHabitsRepository: AnyObject {
-    func fetchHabits() -> [Habit]
+    func fetchHabits(date: Date) -> [Habit]
 }
