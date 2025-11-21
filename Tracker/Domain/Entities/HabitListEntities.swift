@@ -1,7 +1,7 @@
 import Foundation
 
 struct Habit: Identifiable, Equatable {
-    let id: UUID
+    var id: UUID
     var title: String
     var body: String
     var colorHex: String?

@@ -12,6 +12,7 @@ struct HabitListView: View {
                 
                 var model = mockHabit
                 model.createdAt = selectedDate
+                model.id = UUID.init()
                 
                 vm.createHabit(habit: model)
                 vm.fetchHabits(date: selectedDate)
@@ -20,13 +21,19 @@ struct HabitListView: View {
             CalendarView(selectedDate: $selectedDate)
             
             List {
-                ForEach(vm.habits.indices, id: \.self) { index in
-                    HabitListCell(title: vm.habits[index].title)
+                ForEach(vm.habits) { habit in
+                    HabitListCell(habit: habit, action: {
+                        var newHabit = habit
+                        newHabit.isCompletedToday.toggle()
+                        vm.updateHabit(habitId: habit.id.uuidString, habit: newHabit)
+                        vm.fetchHabits(date: selectedDate)
+                    })
                         .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 0))
                         .listRowSeparator(.hidden)
+                     
                         .swipeActions(edge: .trailing, allowsFullSwipe: true) {
                             Button(role: .destructive) {
-                                vm.deleteHabit(habitId: vm.habits[index].id.uuidString)
+                                vm.deleteHabit(habitId: habit.id.uuidString)
                             } label: {
                                 VStack {
                                     Image(systemName: "trash")
@@ -37,8 +44,7 @@ struct HabitListView: View {
                         }
                 }
             }
-            .listStyle(PlainListStyle())
-            .background(Color.clear)
+            .listStyle(.plain)
             
             Spacer()
         }

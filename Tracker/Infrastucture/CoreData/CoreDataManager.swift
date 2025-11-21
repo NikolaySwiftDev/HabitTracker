@@ -44,7 +44,7 @@ final class CoreDataManager: HabitDataSource {
     
     func updateHabit(habitId: String, habit: Habit) {
         let request = HabitEntities.fetchRequest()
-        request.predicate = NSPredicate(format: "id == $@", habitId)
+        request.predicate = NSPredicate(format: "id == %@", habitId)
         
         if let habits = try? context.fetch(request), !habits.isEmpty, let resultHabit = habits.first {
             resultHabit.title = habit.title
