@@ -4,6 +4,7 @@ import Foundation
 final class HabitRepositoryImplement: CreateHabitRepository, FetchHabitsRepository, UpdateHabitRepository, DeleteHabitRepository {
 
     private let dataSource: HabitDataSource
+    
     init(dataSource: HabitDataSource) {
         self.dataSource = dataSource
     }
@@ -16,8 +17,8 @@ final class HabitRepositoryImplement: CreateHabitRepository, FetchHabitsReposito
         dataSource.fetchHabits(date: date)
     }
     
-    func deleteHabit(habitId: String) {
-        dataSource.deleHabit(habitId: habitId)
+    func deleteHabit(title: String) {
+        dataSource.deleHabit(title: title)
     }
     
     func updateHabit(habitId: String, habit: Habit) {

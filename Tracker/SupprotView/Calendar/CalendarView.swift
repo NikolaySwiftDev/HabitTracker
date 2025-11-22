@@ -26,7 +26,6 @@ struct CalendarView: View {
                             .id(index)
                             .onTapGesture {
                                 selectedDate = dates[index]
-                                print(selectedDate.description)
                             }
                         }
                     }
@@ -72,7 +71,7 @@ struct DayView: View {
                 .foregroundColor(isSelected ? .white : .gray)
             
             Text("\(date.dayNumber)")
-                .font(.system(size: 16, weight: .medium))
+                .font(.fontSystem(size: 16, weight: .medium))
                 .foregroundColor(isSelected ? .white : .primary)
         }
         .frame(width: 40, height: 60)

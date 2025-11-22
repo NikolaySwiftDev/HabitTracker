@@ -2,7 +2,7 @@
 import Foundation
 
 protocol DeleteHabitUseCase: AnyObject {
-    func execute(habitId: String)
+    func execute(title: String)
 }
 
 final class DeleteHabitImplement: DeleteHabitUseCase {
@@ -12,7 +12,7 @@ final class DeleteHabitImplement: DeleteHabitUseCase {
         self.repository = repository
     }
     
-    func execute(habitId: String) {
-        repository.deleteHabit(habitId: habitId)
+    func execute(title: String) {
+        repository.deleteHabit(title: title)
     }
 }

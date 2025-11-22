@@ -15,7 +15,7 @@ struct NavigationBar: View {
             Spacer()
             
             Text("Schedule")
-                .font(.system(size: 30, weight: .bold))
+                .font(.fontSystem(size: 30, weight: .bold))
                 .foregroundStyle(.black)
                 .multilineTextAlignment(.center)
 

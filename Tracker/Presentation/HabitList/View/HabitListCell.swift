@@ -25,7 +25,7 @@ struct HabitListCell: View {
                     .frame(width: 20, height: 20)
                 
                 Text(habit.title)
-                    .font(.system(size: 28, weight: .semibold))
+                    .font(.fontSystem(size: 28, weight: .semibold))
                     .foregroundColor(.black)
                 
                 Spacer()

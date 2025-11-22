@@ -4,18 +4,14 @@ import SwiftUI
 struct HabitListView: View {
     @StateObject var vm: HabitListViewModel
     @State private var selectedDate = Date()
+    @State private var showingCreateHabit = false
+    
     
     var body: some View {
         VStack(spacing: 20) {
             
             NavigationBar {
-                
-                var model = mockHabit
-                model.createdAt = selectedDate
-                model.id = UUID.init()
-                
-                vm.createHabit(habit: model)
-                vm.fetchHabits(date: selectedDate)
+                showingCreateHabit.toggle()
             }
             
             CalendarView(selectedDate: $selectedDate)
@@ -33,7 +29,7 @@ struct HabitListView: View {
                      
                         .swipeActions(edge: .trailing, allowsFullSwipe: true) {
                             Button(role: .destructive) {
-                                vm.deleteHabit(habitId: habit.id.uuidString)
+                                vm.deleteHabit(title: habit.title)
                             } label: {
                                 VStack {
                                     Image(systemName: "trash")
@@ -54,6 +50,13 @@ struct HabitListView: View {
         }
         .onChange(of: selectedDate) { newDate in
             vm.fetchHabits(date: newDate)
+        }
+        .sheet(isPresented: $showingCreateHabit) {
+            CreateHabitView(vm: Assembly.createCreateHabitViewModel(), action: {
+                showingCreateHabit = false
+                vm.fetchHabits(date: selectedDate)
+                
+            })
         }
     }
 }

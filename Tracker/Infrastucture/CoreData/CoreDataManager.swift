@@ -58,13 +58,20 @@ final class CoreDataManager: HabitDataSource {
         }
     }
     
-    func deleHabit(habitId: String) {
-        let request = HabitEntities.fetchRequest()
-        request.predicate = NSPredicate(format: "id == %@", habitId)
-        
-        if let habit = try? context.fetch(request), !habit.isEmpty, let resultHabit = habit.first {
-            context.delete(resultHabit)
-            try? context.save()
+    func deleHabit(title: String) {
+            let request = NSFetchRequest<NSFetchRequestResult>(entityName: "HabitEntities")
+            request.predicate = NSPredicate(format: "title == %@", title)
+            
+            let deleteRequest = NSBatchDeleteRequest(fetchRequest: request)
+            
+            do {
+                try context.execute(deleteRequest)
+                // Сбрасываем контекст чтобы отразить изменения
+                context.reset()
+                print("All habits with title '\(title)' deleted successfully using batch delete")
+            } catch {
+                print("Error deleting habits with title '\(title)': \(error)")
+            }
         }
-    }
+
 }
