@@ -145,6 +145,16 @@ struct CreateHabitView: View {
             }
             .disabled(text == "" )
         }
+        .onAppear {
+            Task {
+                await vm.requestNotificationPersmission()
+            }
+        }
+        .onChange(of: toggle) { old in
+            Task {
+                await createPersmision()
+            }
+        }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .padding(20)
         .padding(.top)
@@ -165,6 +175,13 @@ struct CreateHabitView: View {
                 vm.createHaibt(habit: habit)
                 action()
             }
+        }
+    }
+    
+    func createPersmision() async {
+        guard text != "" else {return}
+        Task {
+          try? await vm.createDailyNotification(identifier: text, title: text, body: "Выполните \(text)", hour: 20, minute: 32)
         }
     }
 }

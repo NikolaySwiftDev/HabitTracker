@@ -27,7 +27,18 @@ struct Assembly {
         let dataSource = CoreDataManager(context: context.persistentContainer.viewContext)
         let repository = HabitRepositoryImplement(dataSource: dataSource)
         let createHabitsUseCase = CreateHabitImplement(repository: repository)
-        let viewModel = CreateHabitViewModel(createHabitUseCase: createHabitsUseCase)
+        
+        let notificationDataSource = NotificationManager()
+        let notificationDataSourceRepository = NotificationRepositoryImplement(dataSource: notificationDataSource)
+        
+        let requestNotificationUseCase = RequestNotificationImplement(repository: notificationDataSourceRepository)
+        let deleteNotificationUseCase = DeleteNotificationImplement(repository: notificationDataSourceRepository)
+        let createNotifcationUseCase = CreateNotificationImplement(repository: notificationDataSourceRepository)
+        
+        let viewModel = CreateHabitViewModel(createHabitUseCase: createHabitsUseCase,
+                                             requestNotificationUseCase: requestNotificationUseCase,
+                                             deleteNotifiactionUseCase: deleteNotificationUseCase,
+                                             createNotifiactionUseCase: createNotifcationUseCase)
         
         return viewModel
     }

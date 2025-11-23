@@ -2,5 +2,6 @@
 import Foundation
 
 protocol DeleteNotificationRepository: AnyObject {
-    func deleteotification()
+    func removeNotification(identifier: String)
+//    func removeAllNotifications()
 }
