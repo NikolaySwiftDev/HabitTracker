@@ -18,7 +18,6 @@ struct HabitListCell: View {
                 .opacity(glow ? 1 : 0)
                 .animation(.easeOut(duration: 0.45), value: glow)
             
-            // Основная ячейка
             HStack(spacing: 20) {
                 Image(uiImage: .checkmark)
                     .resizable()

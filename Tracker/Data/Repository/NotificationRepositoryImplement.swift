@@ -19,9 +19,9 @@ final class NotificationRepositoryImplement: RequestNotificationRepository, Dele
         await dataSource.getNotificationStatus()
     }
     
-    func ensureNotificationPermission() async -> Bool {
-        await dataSource.ensureNotificationPermission()
-    }
+//    func ensureNotificationPermission() async -> Bool {
+//        await dataSource.ensureNotificationPermission()
+//    }
     
     func removeNotification(identifier: String) {
         dataSource.removeNotification(identifier: identifier)
@@ -31,8 +31,8 @@ final class NotificationRepositoryImplement: RequestNotificationRepository, Dele
         try await dataSource.createDailyNotification(identifier: identifier, title: title, body: body, hour: hour, minute: minute)
     }
     
-    func createDailyNotificationIfAuthorized(identifier: String, title: String, body: String, hour: Int, minute: Int) async -> Bool {
-       await ((try? dataSource.createDailyNotificationIfAuthorized(identifier: identifier, title: title, body: body, hour: hour, minute: minute)) != nil)
-    }
+//    func createDailyNotificationIfAuthorized(identifier: String, title: String, body: String, hour: Int, minute: Int) async -> Bool {
+//       await ((try? dataSource.createDailyNotificationIfAuthorized(identifier: identifier, title: title, body: body, hour: hour, minute: minute)) != nil)
+//    }
     
 }

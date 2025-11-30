@@ -11,6 +11,7 @@ struct CreateHabitView: View {
     @State var date: Date = .now
     @State var counterDay: Int = 10
     @State var toggle: Bool = false
+    @State var notificationTime: Date = .now
     let action: ()->()
     
     var body: some View {
@@ -116,13 +117,21 @@ struct CreateHabitView: View {
                         .resizable()
                         .frame(width: 25, height:  25)
                     
-                    Text("Notify daily")
+                    Text("Notify")
                         .font(.fontSystem(size: 22, weight: .regular))
                         .minimumScaleFactor(0.6)
                     Spacer()
                     
-                    Toggle("", isOn: $toggle)
+                    if toggle {
+                        DatePicker(
+                            "",
+                            selection: $notificationTime,
+                            displayedComponents: .hourAndMinute
+                        )
+                        .datePickerStyle(CompactDatePickerStyle())
+                    }
                     
+                    Toggle("", isOn: $toggle)
                     
                 }
                 .padding(20)
@@ -150,11 +159,6 @@ struct CreateHabitView: View {
                 await vm.requestNotificationPersmission()
             }
         }
-        .onChange(of: toggle) { old in
-            Task {
-                await createPersmision()
-            }
-        }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .padding(20)
         .padding(.top)
@@ -162,30 +166,74 @@ struct CreateHabitView: View {
     }
     
     func createbuttonAction () {
+        let habitsID = UUID()
         for dayOffset in 0..<counterDay {
+
             if let habitDate = Calendar.current.date(byAdding: .day, value: dayOffset, to: date) {
                 let habit = Habit(
                     id: UUID(),
+                    habitsID: habitsID,
                     title: text,
-                    body: "",
                     streak: 0,
                     isCompletedToday: false,
                     createdAt: habitDate
                 )
-                vm.createHaibt(habit: habit)
+                vm.createHabit(habit: habit)
+
+              
                 action()
             }
+        }
+        Task {
+            await createPersmision()
         }
     }
     
     func createPersmision() async {
-        guard text != "" else {return}
+        guard text != "", toggle else {return}
+        let hour = Calendar.current.component(.hour, from: notificationTime)
+        let minute = Calendar.current.component(.minute, from: notificationTime)
         Task {
-          try? await vm.createDailyNotification(identifier: text, title: text, body: "Выполните \(text)", hour: 20, minute: 32)
+          try? await vm.createDailyNotification(identifier: text, title: text, body: "Do habit - \(text)", hour: hour, minute: minute)
         }
     }
 }
 
 #Preview {
     CreateHabitView(vm: Assembly.createCreateHabitViewModel(), action: {})
+}
+
+
+struct EmojiTextField: UIViewRepresentable {
+    @Binding var text: String
+    var placeholder: String = ""
+
+    func makeUIView(context: Context) -> UITextField {
+        let textField = UITextField()
+        textField.placeholder = placeholder
+        textField.text = text
+        textField.delegate = context.coordinator
+        textField.keyboardType = .emoji
+        return textField
+    }
+
+    func updateUIView(_ uiView: UITextField, context: Context) {
+        uiView.text = text
+    }
+
+    func makeCoordinator() -> Coordinator {
+        Coordinator($text)
+    }
+
+    class Coordinator: NSObject, UITextFieldDelegate {
+        @Binding var text: String
+
+        init(_ text: Binding<String>) {
+            self._text = text
+        }
+
+        func textFieldDidChangeSelection(_ textField: UITextField) {
+            text = textField.text ?? ""
+        }
+    }
 }

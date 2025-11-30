@@ -6,20 +6,18 @@ struct HabitMapper {
     static func toEntety(habit: Habit, context: NSManagedObjectContext) -> HabitEntities {
         let entity = HabitEntities(context: context)
         entity.id = habit.id
+        entity.habitsID = habit.habitsID
         entity.title = habit.title
-        entity.body = habit.body
         entity.isCompletedToday = habit.isCompletedToday
         entity.createdAt = habit.createdAt
         entity.streak = habit.streak
-        entity.colorHex = habit.colorHex
         return entity
     }
     
     static func toDomain(entity: HabitEntities) -> Habit {
         let habit = Habit(id: entity.id ?? UUID(),
+                          habitsID: entity.habitsID ?? UUID(),
                           title: entity.title ?? "",
-                          body: entity.body ?? "",
-                          colorHex: entity.colorHex ?? "",
                           streak: entity.streak,
                           isCompletedToday: entity.isCompletedToday,
                           createdAt: entity.createdAt ?? .now)

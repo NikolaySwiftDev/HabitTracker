@@ -29,7 +29,8 @@ struct HabitListView: View {
                      
                         .swipeActions(edge: .trailing, allowsFullSwipe: true) {
                             Button(role: .destructive) {
-                                vm.deleteHabit(title: habit.title)
+
+                                vm.deleteHabit(title: habit.habitsID.uuidString)
                             } label: {
                                 VStack {
                                     Image(systemName: "trash")

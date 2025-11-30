@@ -3,7 +3,7 @@ import Foundation
 
 protocol CreateNotificationUseCase: AnyObject {
     func createDailyNotification(identifier: String, title: String, body: String, hour: Int, minute: Int) async throws
-    func createDailyNotificationIfAuthorized(identifier: String, title: String, body: String, hour: Int, minute: Int) async -> Bool
+//    func createDailyNotificationIfAuthorized(identifier: String, title: String, body: String, hour: Int, minute: Int) async -> Bool
 }
 
 final class CreateNotificationImplement: CreateNotificationUseCase {
@@ -18,8 +18,8 @@ final class CreateNotificationImplement: CreateNotificationUseCase {
         try? await repository.createDailyNotification(identifier: identifier, title: title, body: body, hour: hour, minute: minute)
     }
     
-    func createDailyNotificationIfAuthorized(identifier: String, title: String, body: String, hour: Int, minute: Int) async -> Bool {
-        await ((try? repository.createDailyNotification(identifier: identifier, title: title, body: body, hour: hour, minute: minute)) != nil)
-    }
+//    func createDailyNotificationIfAuthorized(identifier: String, title: String, body: String, hour: Int, minute: Int) async -> Bool {
+//        await ((try? repository.createDailyNotification(identifier: identifier, title: title, body: body, hour: hour, minute: minute)) != nil)
+//    }
     
 }

@@ -5,7 +5,7 @@ import UserNotifications
 protocol RequestNotificationUseCase: AnyObject {
     func requestNotificationPermission() async -> Bool
     func getNotificationStatus() async -> UNAuthorizationStatus
-    func ensureNotificationPermission() async -> Bool
+//    func ensureNotificationPermission() async -> Bool
 }
 
 final class RequestNotificationImplement: RequestNotificationUseCase {
@@ -24,8 +24,8 @@ final class RequestNotificationImplement: RequestNotificationUseCase {
         await repository.getNotificationStatus()
     }
     
-    func ensureNotificationPermission() async -> Bool {
-        await repository.ensureNotificationPermission()
-    }
+//    func ensureNotificationPermission() async -> Bool {
+//        await repository.ensureNotificationPermission()
+//    }
 
 }

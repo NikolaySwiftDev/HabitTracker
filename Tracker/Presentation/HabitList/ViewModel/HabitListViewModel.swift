@@ -32,8 +32,8 @@ final class HabitListViewModel: ObservableObject {
 }
 
 let mockHabit = Habit(id: UUID.init(),
+                      habitsID: UUID.init(),
                       title: "ЗОЖ",
-                      body: "Соблюдать режим",
                       streak: 0,
                       isCompletedToday: false,
                       createdAt: .now)

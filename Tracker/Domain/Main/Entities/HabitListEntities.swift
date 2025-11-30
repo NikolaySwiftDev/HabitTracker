@@ -1,11 +1,11 @@
 import Foundation
 
 struct Habit: Identifiable, Equatable {
-    var id: UUID
-    var title: String
-    var body: String
-    var colorHex: String?
-    var streak: Int16
+    
+    let id: UUID
+    let habitsID: UUID
+    let title: String
+    let streak: Int16
     var isCompletedToday: Bool
-    var createdAt: Date
+    let createdAt: Date
 }

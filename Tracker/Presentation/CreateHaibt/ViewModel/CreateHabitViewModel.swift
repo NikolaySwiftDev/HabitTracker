@@ -16,7 +16,7 @@ final class CreateHabitViewModel: ObservableObject {
         self.createNotifiactionUseCase = createNotifiactionUseCase
     }
     
-    func createHaibt(habit: Habit) {
+    func createHabit(habit: Habit) {
         createHabitUseCase.execute(habit: habit)
     }
     
