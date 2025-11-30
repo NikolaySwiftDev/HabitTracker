@@ -204,36 +204,3 @@ struct CreateHabitView: View {
 }
 
 
-struct EmojiTextField: UIViewRepresentable {
-    @Binding var text: String
-    var placeholder: String = ""
-
-    func makeUIView(context: Context) -> UITextField {
-        let textField = UITextField()
-        textField.placeholder = placeholder
-        textField.text = text
-        textField.delegate = context.coordinator
-        textField.keyboardType = .emoji
-        return textField
-    }
-
-    func updateUIView(_ uiView: UITextField, context: Context) {
-        uiView.text = text
-    }
-
-    func makeCoordinator() -> Coordinator {
-        Coordinator($text)
-    }
-
-    class Coordinator: NSObject, UITextFieldDelegate {
-        @Binding var text: String
-
-        init(_ text: Binding<String>) {
-            self._text = text
-        }
-
-        func textFieldDidChangeSelection(_ textField: UITextField) {
-            text = textField.text ?? ""
-        }
-    }
-}
