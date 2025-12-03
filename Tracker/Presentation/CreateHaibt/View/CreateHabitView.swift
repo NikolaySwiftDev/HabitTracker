@@ -5,11 +5,13 @@ import SwiftUI
 struct CreateHabitView: View {
     
     @StateObject var vm: CreateHabitViewModel
+    @Environment(\.scenePhase) var scenePhase
     
     @State var text: String = ""
     @State var textEmoji: String = "🏃‍♀️"
     @State var date: Date = .now
     @State var counterDay: Int = 10
+    @State var isNotificationIsAuthorized: Bool = false
     @State var toggle: Bool = false
     @State var notificationTime: Date = .now
     let action: ()->()
@@ -132,6 +134,12 @@ struct CreateHabitView: View {
                     }
                     
                     Toggle("", isOn: $toggle)
+                        .disabled(!isNotificationIsAuthorized)
+                        .onTapGesture {
+                            if !isNotificationIsAuthorized {
+                                openAppSettings()
+                            }
+                        }
                     
                 }
                 .padding(20)
@@ -154,15 +162,24 @@ struct CreateHabitView: View {
             }
             .disabled(text == "" )
         }
-        .onAppear {
-            Task {
-                await vm.requestNotificationPersmission()
-            }
-        }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .padding(20)
         .padding(.top)
-
+        .onAppear {
+            Task {
+                await checkNotificationIsEnable()
+            }
+        }
+        .onChange(of: scenePhase) { newPhase in
+            if newPhase == .active {
+                Task {
+                    await checkNotificationIsEnable()
+                    if !isNotificationIsAuthorized {
+                        toggle = false
+                    }
+                }
+            }
+        }
     }
     
     func createbuttonAction () {
@@ -185,16 +202,30 @@ struct CreateHabitView: View {
             }
         }
         Task {
-            await createPersmision()
+            await createPersmision(id: habitsID.uuidString)
         }
     }
     
-    func createPersmision() async {
+    func createPersmision(id: String) async {
         guard text != "", toggle else {return}
         let hour = Calendar.current.component(.hour, from: notificationTime)
         let minute = Calendar.current.component(.minute, from: notificationTime)
         Task {
-          try? await vm.createDailyNotification(identifier: text, title: text, body: "Do habit - \(text)", hour: hour, minute: minute)
+          try? await vm.createDailyNotification(identifier: id, title: text, body: "Do habit - \(text)", hour: hour, minute: minute)
+        }
+    }
+    
+    func checkNotificationIsEnable() async {
+        await isNotificationIsAuthorized = vm.getNotificationStatus()
+    }
+    
+    private func openAppSettings() {
+        guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else {
+            return
+        }
+
+        if UIApplication.shared.canOpenURL(settingsUrl) {
+            UIApplication.shared.open(settingsUrl)
         }
     }
 }

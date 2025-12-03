@@ -17,8 +17,8 @@ final class HabitRepositoryImplement: CreateHabitRepository, FetchHabitsReposito
         dataSource.fetchHabits(date: date)
     }
     
-    func deleteHabit(title: String) {
-        dataSource.deleHabit(title: title)
+    func deleteHabit(id: String) {
+        dataSource.deleHabit(id: id)
     }
     
     func updateHabit(habitId: String, habit: Habit) {

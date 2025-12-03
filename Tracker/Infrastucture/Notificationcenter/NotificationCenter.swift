@@ -18,20 +18,31 @@ final class NotificationManager: NotificationDataSource {
     }
     
     // MARK: - Check Current Permission Status
-    func getNotificationStatus() async -> UNAuthorizationStatus {
-        let settings = await center.notificationSettings()
-        return settings.authorizationStatus
+    func getNotificationStatus() async -> Bool {
+        let settings =  await center.notificationSettings()
+        switch settings.authorizationStatus {
+        case .notDetermined:
+           return false
+        case .denied:
+            return false
+        case .authorized:
+            return true
+        case .provisional:
+            return true
+        case .ephemeral:
+            return true
+        @unknown default:
+            return false
+        }
     }
     
     // MARK: - Create Daily Notification
     func createDailyNotification(identifier: String, title: String, body: String, hour: Int, minute: Int) async throws {
-        // Создаем контент уведомления
         let content = UNMutableNotificationContent()
         content.title = title
         content.body = body
-//        content.sound = .default
+        content.sound = .defaultRingtone
         
-        // Создаем триггер на определенное время каждый день
         var dateComponents = DateComponents()
         dateComponents.hour = hour
         dateComponents.minute = minute
@@ -61,44 +72,4 @@ final class NotificationManager: NotificationDataSource {
         center.removeAllPendingNotificationRequests()
         print("All notifications removed")
     }
-    
-    // MARK: - Convenience Methods
-    
-    /// Проверяет статус разрешений и запрашивает их если нужно
-//    func ensureNotificationPermission() async -> Bool {
-//        let status = await getNotificationStatus()
-//        
-//        switch status {
-//        case .authorized, .provisional, .ephemeral:
-//            return true
-//        case .denied:
-//            return false
-//        case .notDetermined:
-//            return await requestNotificationPermission()
-//        @unknown default:
-//            return await requestNotificationPermission()
-//        }
-//    }
-    
-    /// Создает ежедневное уведомление только если есть разрешение
-//    func createDailyNotificationIfAuthorized(identifier: String, title: String, body: String, hour: Int, minute: Int) async -> Bool {
-//        guard await ensureNotificationPermission() else {
-//            print("Cannot create notification: permission denied")
-//            return false
-//        }
-//        
-//        do {
-//            try await createDailyNotification(
-//                identifier: identifier,
-//                title: title,
-//                body: body,
-//                hour: hour,
-//                minute: minute
-//            )
-//            return true
-//        } catch {
-//            print("Failed to create daily notification: \(error)")
-//            return false
-//        }
-//    }
 }

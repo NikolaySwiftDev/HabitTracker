@@ -6,7 +6,6 @@ struct HabitListView: View {
     @State private var selectedDate = Date()
     @State private var showingCreateHabit = false
     
-    
     var body: some View {
         VStack(spacing: 20) {
             
@@ -29,8 +28,9 @@ struct HabitListView: View {
                      
                         .swipeActions(edge: .trailing, allowsFullSwipe: true) {
                             Button(role: .destructive) {
-
-                                vm.deleteHabit(title: habit.habitsID.uuidString)
+                                let id = habit.habitsID.uuidString
+                                vm.deleteHabit(id: id)
+                                vm.removeNotification(identifier: id)
                             } label: {
                                 VStack {
                                     Image(systemName: "trash")
@@ -48,6 +48,9 @@ struct HabitListView: View {
         .padding()
         .onAppear {
             vm.fetchHabits(date: selectedDate)
+            Task {
+               await vm.requestNotificationPersmission()
+            }
         }
         .onChange(of: selectedDate) { newDate in
             vm.fetchHabits(date: newDate)

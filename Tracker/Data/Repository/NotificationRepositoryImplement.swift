@@ -1,7 +1,6 @@
 
 
 import Foundation
-import UserNotifications
 
 final class NotificationRepositoryImplement: RequestNotificationRepository, DeleteNotificationRepository, CreateNotificationRepository {
     
@@ -15,13 +14,9 @@ final class NotificationRepositoryImplement: RequestNotificationRepository, Dele
         await dataSource.requestNotificationPermission()
     }
     
-    func getNotificationStatus() async -> UNAuthorizationStatus {
+    func getNotificationStatus() async -> Bool {
         await dataSource.getNotificationStatus()
     }
-    
-//    func ensureNotificationPermission() async -> Bool {
-//        await dataSource.ensureNotificationPermission()
-//    }
     
     func removeNotification(identifier: String) {
         dataSource.removeNotification(identifier: identifier)
@@ -30,9 +25,4 @@ final class NotificationRepositoryImplement: RequestNotificationRepository, Dele
     func createDailyNotification(identifier: String, title: String, body: String, hour: Int, minute: Int) async throws {
         try await dataSource.createDailyNotification(identifier: identifier, title: title, body: body, hour: hour, minute: minute)
     }
-    
-//    func createDailyNotificationIfAuthorized(identifier: String, title: String, body: String, hour: Int, minute: Int) async -> Bool {
-//       await ((try? dataSource.createDailyNotificationIfAuthorized(identifier: identifier, title: title, body: body, hour: hour, minute: minute)) != nil)
-//    }
-    
 }
