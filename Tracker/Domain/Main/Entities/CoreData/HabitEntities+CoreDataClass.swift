@@ -19,6 +19,7 @@ extension HabitEntities {
     @NSManaged public var id: UUID?
     @NSManaged public var habitsID: UUID?
     @NSManaged public var title: String?
+    @NSManaged public var emoji: String?
     @NSManaged public var streak: Int16
     @NSManaged public var isCompletedToday: Bool
     @NSManaged public var createdAt: Date?

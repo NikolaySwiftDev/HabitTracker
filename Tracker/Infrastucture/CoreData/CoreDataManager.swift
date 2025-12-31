@@ -48,6 +48,7 @@ final class CoreDataManager: HabitDataSource {
         
         if let habits = try? context.fetch(request), !habits.isEmpty, let resultHabit = habits.first {
             resultHabit.title = habit.title
+            resultHabit.emoji = habit.emoji
             resultHabit.habitsID = habit.habitsID
             resultHabit.createdAt = habit.createdAt
             resultHabit.id = habit.id

@@ -59,7 +59,6 @@ struct HabitListView: View {
             CreateHabitView(vm: Assembly.createCreateHabitViewModel(), action: {
                 showingCreateHabit = false
                 vm.fetchHabits(date: selectedDate)
-                
             })
         }
     }

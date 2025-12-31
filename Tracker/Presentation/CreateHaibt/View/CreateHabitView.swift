@@ -33,15 +33,12 @@ struct CreateHabitView: View {
                     .background(.gray.opacity(0.2))
                     .cornerRadius(25)
                 Spacer()
-                TextField("🏃‍♀️", text: $textEmoji)
-                    .font(.fontSystem(size: 22, weight: .regular))
-                    .multilineTextAlignment(.center)
-                    .padding(15)
-                    .foregroundStyle(.gray)
+                EmojiTextField(text: $textEmoji)
                     .background(.gray.opacity(0.2))
                     .cornerRadius(25)
                     .frame(width: 60)
             }
+            .frame(height: 60)
             
             ZStack {
                 Color.gray.opacity(0.2)
@@ -180,17 +177,23 @@ struct CreateHabitView: View {
                 }
             }
         }
+        .onTapGesture {
+            UIApplication.shared.endEditing()
+        }
     }
     
     func createbuttonAction () {
         let habitsID = UUID()
         for dayOffset in 0..<counterDay {
-
+            if textEmoji.isEmpty {
+                textEmoji = "💡"
+            }
             if let habitDate = Calendar.current.date(byAdding: .day, value: dayOffset, to: date) {
                 let habit = Habit(
                     id: UUID(),
                     habitsID: habitsID,
                     title: text,
+                    emoji: textEmoji,
                     streak: 0,
                     isCompletedToday: false,
                     createdAt: habitDate

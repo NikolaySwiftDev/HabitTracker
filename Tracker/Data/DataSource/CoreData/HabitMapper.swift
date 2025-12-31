@@ -8,6 +8,7 @@ struct HabitMapper {
         entity.id = habit.id
         entity.habitsID = habit.habitsID
         entity.title = habit.title
+        entity.emoji = habit.emoji
         entity.isCompletedToday = habit.isCompletedToday
         entity.createdAt = habit.createdAt
         entity.streak = habit.streak
@@ -18,6 +19,7 @@ struct HabitMapper {
         let habit = Habit(id: entity.id ?? UUID(),
                           habitsID: entity.habitsID ?? UUID(),
                           title: entity.title ?? "",
+                          emoji: entity.emoji ?? "",
                           streak: entity.streak,
                           isCompletedToday: entity.isCompletedToday,
                           createdAt: entity.createdAt ?? .now)
