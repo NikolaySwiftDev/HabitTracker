@@ -194,9 +194,8 @@ struct CreateHabitView: View {
                     habitsID: habitsID,
                     title: text,
                     emoji: textEmoji,
-                    streak: 0,
                     isCompletedToday: false,
-                    createdAt: habitDate
+                    createdAt: habitDate,
                 )
                 vm.createHabit(habit: habit)
 

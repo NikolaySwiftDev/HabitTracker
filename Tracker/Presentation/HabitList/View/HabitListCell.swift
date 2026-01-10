@@ -57,7 +57,7 @@ struct HabitListCell: View {
 
 
 #Preview {
-    HabitListCell(habit: Habit.init(id: UUID.init(), habitsID: UUID.init(), title: "Sport", emoji: "🏃‍♀️", streak: 1, isCompletedToday: false, createdAt: .now)) {
+    HabitListCell(habit: Habit.init(id: UUID.init(), habitsID: UUID.init(), title: "Sport", emoji: "🏃‍♀️", isCompletedToday: false, createdAt: .now)) {
         //
     }
     .frame(height: 60)

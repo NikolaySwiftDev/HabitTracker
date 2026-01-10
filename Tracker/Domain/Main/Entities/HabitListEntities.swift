@@ -1,12 +1,10 @@
 import Foundation
 
 struct Habit: Identifiable, Equatable {
-    
     let id: UUID
     let habitsID: UUID
     let title: String
     let emoji: String
-    let streak: Int16
     var isCompletedToday: Bool
     let createdAt: Date
 }

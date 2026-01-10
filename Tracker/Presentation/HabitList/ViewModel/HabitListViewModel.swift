@@ -7,6 +7,7 @@ import Combine
 final class HabitListViewModel: ObservableObject {
     
     @Published var habits: [Habit] = []
+    @Published var allHabitsComplete: Bool = false
     
     private let deleteHabitUseCase: DeleteHabitUseCase
     private let fetchHabitsUseCase: FetchHabitsUseCase
@@ -47,5 +48,9 @@ final class HabitListViewModel: ObservableObject {
     
     func removeNotification(identifier: String) {
         deleteNotifiactionUseCase.removeNotification(identifier: identifier)
+    }
+        
+    func checkIsAllHabitsComplete() -> Bool {
+        habits.allSatisfy { $0.isCompletedToday }
     }
 }

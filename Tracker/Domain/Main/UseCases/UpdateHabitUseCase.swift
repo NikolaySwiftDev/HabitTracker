@@ -6,13 +6,20 @@ protocol UpdateHabitUseCase: AnyObject {
 }
 
 final class UpdateHabitImplement: UpdateHabitUseCase {
+
+
     private let repository: UpdateHabitRepository
-    
+    private let calendar = Calendar.current
+
     init(repository: UpdateHabitRepository) {
         self.repository = repository
     }
-    
+
     func execute(habitId: String, habit: Habit) {
-        repository.updateHabit(habitId: habitId, habit: habit)
+        var newHabit = habit
+        newHabit.isCompletedToday.toggle()
+        repository.updateHabit(habitId: habit.id.uuidString, habit: newHabit)
     }
+
+
 }

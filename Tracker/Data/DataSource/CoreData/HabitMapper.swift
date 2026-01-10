@@ -11,7 +11,6 @@ struct HabitMapper {
         entity.emoji = habit.emoji
         entity.isCompletedToday = habit.isCompletedToday
         entity.createdAt = habit.createdAt
-        entity.streak = habit.streak
         return entity
     }
     
@@ -20,9 +19,17 @@ struct HabitMapper {
                           habitsID: entity.habitsID ?? UUID(),
                           title: entity.title ?? "",
                           emoji: entity.emoji ?? "",
-                          streak: entity.streak,
                           isCompletedToday: entity.isCompletedToday,
                           createdAt: entity.createdAt ?? .now)
         return habit
     }
+    
+//    static func toDomainWdidget(entity: HabitEntities) -> WidgetHabitSnapshot {
+//        let habit = WidgetHabitSnapshot(id: entity.id?.uuidString ?? "",
+//                                        title: entity.title ?? "",
+//                                        emoji: entity.emoji ?? "",
+//                                        isCompletedToday: entity.isCompletedToday,
+//                                        streak: Int(entity.streak))
+//        return habit
+//    }
 }

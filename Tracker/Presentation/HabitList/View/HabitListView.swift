@@ -14,13 +14,11 @@ struct HabitListView: View {
             }
             
             CalendarView(selectedDate: $selectedDate)
-            
+
             List {
                 ForEach(vm.habits) { habit in
                     HabitListCell(habit: habit, action: {
-                        var newHabit = habit
-                        newHabit.isCompletedToday.toggle()
-                        vm.updateHabit(habitId: habit.id.uuidString, habit: newHabit)
+                        vm.updateHabit(habitId: habit.id.uuidString, habit: habit)
                         vm.fetchHabits(date: selectedDate)
                     })
                         .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 0))
@@ -42,6 +40,12 @@ struct HabitListView: View {
                 }
             }
             .listStyle(.plain)
+            
+            if vm.allHabitsComplete {
+                Text("Done all habits")
+                    .foregroundStyle(.green)
+                    .font(.fontSystem(size: 20, weight: .semibold))
+            }
             
             Spacer()
         }

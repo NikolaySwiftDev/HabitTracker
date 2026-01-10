@@ -2,7 +2,7 @@
 import Foundation
 import CoreData
 
-final class CoreDataManager: HabitDataSource {
+final class CoreDataManager: HabitDataSource /*WidgetSnapshotDataSource*/ {
     
     private let context: NSManagedObjectContext
     
@@ -17,17 +17,17 @@ final class CoreDataManager: HabitDataSource {
     
     func fetchHabits(date: Date) -> [Habit] {
         let request = HabitEntities.fetchRequest()
-
+        
         let calendar = Calendar.current
         let startOfDay = calendar.startOfDay(for: date)
         let endOfDay = calendar.date(byAdding: .day, value: 1, to: startOfDay)!
-
+        
         request.predicate = NSPredicate(
             format: "createdAt >= %@ AND createdAt < %@",
             startOfDay as NSDate,
             endOfDay as NSDate
         )
-
+        
         request.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: true)]
         
         do {
@@ -53,24 +53,22 @@ final class CoreDataManager: HabitDataSource {
             resultHabit.createdAt = habit.createdAt
             resultHabit.id = habit.id
             resultHabit.isCompletedToday = habit.isCompletedToday
-            resultHabit.streak = habit.streak
             try? context.save()
         }
     }
     
     func deleHabit(id: String) {
-            let request = NSFetchRequest<NSFetchRequestResult>(entityName: "HabitEntities")
-            request.predicate = NSPredicate(format: "habitsID == %@", id)
-            
-            let deleteRequest = NSBatchDeleteRequest(fetchRequest: request)
-            
-            do {
-                try context.execute(deleteRequest)
-                context.reset()
-                print("All habits with title '\(id)' deleted successfully using batch delete")
-            } catch {
-                print("Error deleting habits with title '\(id)': \(error)")
-            }
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "HabitEntities")
+        request.predicate = NSPredicate(format: "habitsID == %@", id)
+        
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: request)
+        
+        do {
+            try context.execute(deleteRequest)
+            context.reset()
+            print("All habits with title '\(id)' deleted successfully using batch delete")
+        } catch {
+            print("Error deleting habits with title '\(id)': \(error)")
         }
-
+    }
 }
