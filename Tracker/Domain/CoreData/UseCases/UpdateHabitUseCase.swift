@@ -7,7 +7,6 @@ protocol UpdateHabitUseCase: AnyObject {
 
 final class UpdateHabitImplement: UpdateHabitUseCase {
 
-
     private let repository: UpdateHabitRepository
     private let calendar = Calendar.current
 

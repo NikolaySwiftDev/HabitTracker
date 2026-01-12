@@ -7,7 +7,7 @@ struct CreateHabitView: View {
     @StateObject var vm: CreateHabitViewModel
     @Environment(\.scenePhase) var scenePhase
     
-    @State var text: String = ""
+    @State var text: String = "Sport"
     @State var textEmoji: String = "🏃‍♀️"
     @State var date: Date = .now
     @State var counterDay: Int = 10

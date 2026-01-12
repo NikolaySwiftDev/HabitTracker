@@ -41,13 +41,18 @@ struct HabitListView: View {
             }
             .listStyle(.plain)
             
-            if vm.allHabitsComplete {
+            Spacer()
+            
+            if vm.checkIsAllHabitsComplete() {
                 Text("Done all habits")
-                    .foregroundStyle(.green)
+                    .foregroundStyle(.black)
+                    .font(.fontSystem(size: 20, weight: .semibold))
+            } else {
+                Text("Do \(vm.checkCountsIsAllHabitsComplete()) habits")
+                    .foregroundStyle(.black)
                     .font(.fontSystem(size: 20, weight: .semibold))
             }
             
-            Spacer()
         }
         .padding()
         .onAppear {
@@ -55,9 +60,12 @@ struct HabitListView: View {
             Task {
                await vm.requestNotificationPersmission()
             }
+            let progress = DailyProgress(date: selectedDate, streak: 1, isComplete: true)
+            vm.updateDailyprogress(dailyProgress: progress)
         }
         .onChange(of: selectedDate) { newDate in
             vm.fetchHabits(date: newDate)
+            print(vm.fetchDailyProgress()?.streak)
         }
         .sheet(isPresented: $showingCreateHabit) {
             CreateHabitView(vm: Assembly.createCreateHabitViewModel(), action: {

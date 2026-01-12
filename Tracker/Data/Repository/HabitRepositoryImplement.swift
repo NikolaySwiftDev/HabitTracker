@@ -23,7 +23,5 @@ final class HabitRepositoryImplement: CreateHabitRepository, FetchHabitsReposito
     
     func updateHabit(habitId: String, habit: Habit) {
         dataSource.updateHabit(habitId: habitId, habit: habit)
-
     }
-    
 }

@@ -7,12 +7,17 @@ import Combine
 final class HabitListViewModel: ObservableObject {
     
     @Published var habits: [Habit] = []
-    @Published var allHabitsComplete: Bool = false
     
+    //Core Data
     private let deleteHabitUseCase: DeleteHabitUseCase
     private let fetchHabitsUseCase: FetchHabitsUseCase
     private let updateHabitUseCase: UpdateHabitUseCase
     
+    //User Defaults
+    private let updateDailyProgressUseCase: UpdateDailyProgressUseCase
+    private let fetchDailyProgressUseCase: FetchDailyProgressUseCase
+    
+    //User Defaults
     private let requestNotificationUseCase: RequestNotificationUseCase
     private let deleteNotifiactionUseCase: DeleteNotificationUseCase
 
@@ -20,16 +25,20 @@ final class HabitListViewModel: ObservableObject {
     init(deleteHabitUseCase: DeleteHabitUseCase,
          fetchHabitsUseCase: FetchHabitsUseCase,
          updateHabitUseCase: UpdateHabitUseCase,
+         updateDailyProgress: UpdateDailyProgressUseCase,
+         fetchDailyProgress: FetchDailyProgressUseCase,
          requestNotificationUseCase: RequestNotificationUseCase,
-         deleteNotifiactionUseCase: DeleteNotificationUseCase,
-    ) {
+         deleteNotifiactionUseCase: DeleteNotificationUseCase) {
         self.deleteHabitUseCase = deleteHabitUseCase
         self.fetchHabitsUseCase = fetchHabitsUseCase
         self.updateHabitUseCase = updateHabitUseCase
+        self.updateDailyProgressUseCase = updateDailyProgress
+        self.fetchDailyProgressUseCase = fetchDailyProgress
         self.requestNotificationUseCase = requestNotificationUseCase
         self.deleteNotifiactionUseCase = deleteNotifiactionUseCase
     }
     
+    //Core Data
     func fetchHabits(date: Date) {
         habits = fetchHabitsUseCase.execute(date: date)
     }
@@ -41,7 +50,16 @@ final class HabitListViewModel: ObservableObject {
     func updateHabit(habitId: String, habit: Habit) {
         updateHabitUseCase.execute(habitId: habitId, habit: habit)
     }
+        
+    func checkIsAllHabitsComplete() -> Bool {
+        habits.allSatisfy { $0.isCompletedToday }
+    }
     
+    func checkCountsIsAllHabitsComplete() -> Int {
+        habits.filter { !$0.isCompletedToday }.count
+    }
+    
+    //Nofit
     func requestNotificationPersmission() async -> Bool {
         await requestNotificationUseCase.requestNotificationPermission()
     }
@@ -49,8 +67,13 @@ final class HabitListViewModel: ObservableObject {
     func removeNotification(identifier: String) {
         deleteNotifiactionUseCase.removeNotification(identifier: identifier)
     }
-        
-    func checkIsAllHabitsComplete() -> Bool {
-        habits.allSatisfy { $0.isCompletedToday }
+    
+    //UserDef
+    func fetchDailyProgress() -> DailyProgress? {
+        fetchDailyProgressUseCase.execute()
+    }
+    
+    func updateDailyprogress(dailyProgress: DailyProgress) {
+        updateDailyProgressUseCase.execute(dailyProgress: dailyProgress)
     }
 }

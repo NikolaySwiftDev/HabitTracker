@@ -23,13 +23,4 @@ struct HabitMapper {
                           createdAt: entity.createdAt ?? .now)
         return habit
     }
-    
-//    static func toDomainWdidget(entity: HabitEntities) -> WidgetHabitSnapshot {
-//        let habit = WidgetHabitSnapshot(id: entity.id?.uuidString ?? "",
-//                                        title: entity.title ?? "",
-//                                        emoji: entity.emoji ?? "",
-//                                        isCompletedToday: entity.isCompletedToday,
-//                                        streak: Int(entity.streak))
-//        return habit
-//    }
 }

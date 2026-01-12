@@ -6,7 +6,7 @@ import CoreData
 struct Assembly {
     static func createHabitListViewModel() -> HabitListViewModel {
         
-        //Core Data
+        //Habit Core Data
         let context = PersistaintController()
         let dataSource = CoreDataManager(context: context.persistentContainer.viewContext)
         let repository = HabitRepositoryImplement(dataSource: dataSource)
@@ -20,13 +20,22 @@ struct Assembly {
         let notificationDataSourceRepository = NotificationRepositoryImplement(dataSource: notificationDataSource)
         let requestNotificationUseCase = RequestNotificationImplement(repository: notificationDataSourceRepository)
         let deleteNotificationUseCase = DeleteNotificationImplement(repository: notificationDataSourceRepository)
+        
+        //User Defaults
+        let userDefDataSource = UserDefaultsManager()
+        let userDefDataSourceRepository = DailyProgressRepositoryImplement(dataSource: userDefDataSource)
+        let updateDefDataUseCase = UpdateDailyProgressImplementation(repository: userDefDataSourceRepository)
+        let fetchDefDataUseCase = FetchDailyProgressImplementation(repository: userDefDataSourceRepository)
 
         //View Model
         let viewModel = HabitListViewModel(deleteHabitUseCase: deleteHabitUseCase,
                                            fetchHabitsUseCase: fetchHabitsUseCase,
                                            updateHabitUseCase: updateHabitsUseCase,
+                                           updateDailyProgress: updateDefDataUseCase,
+                                           fetchDailyProgress: fetchDefDataUseCase,
                                            requestNotificationUseCase: requestNotificationUseCase,
-                                           deleteNotifiactionUseCase: deleteNotificationUseCase,
+                                           deleteNotifiactionUseCase: deleteNotificationUseCase
+                                          
         )
         
         return viewModel

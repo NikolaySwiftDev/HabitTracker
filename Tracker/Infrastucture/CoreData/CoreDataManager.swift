@@ -2,10 +2,10 @@
 import Foundation
 import CoreData
 
-final class CoreDataManager: HabitDataSource /*WidgetSnapshotDataSource*/ {
+final class CoreDataManager: HabitDataSource {
     
     private let context: NSManagedObjectContext
-    
+        
     init(context: NSManagedObjectContext) {
         self.context = context
     }
