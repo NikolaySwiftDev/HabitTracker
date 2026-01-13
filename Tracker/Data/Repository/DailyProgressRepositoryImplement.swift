@@ -16,5 +16,4 @@ final class DailyProgressRepositoryImplement: UpdateDailyProgressRepository, Fet
     func fetchDailyProgress() -> DailyProgress? {
         dataSource.getDailyProgress()
     }
-    
 }

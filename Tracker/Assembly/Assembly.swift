@@ -24,7 +24,7 @@ struct Assembly {
         //User Defaults
         let userDefDataSource = UserDefaultsManager()
         let userDefDataSourceRepository = DailyProgressRepositoryImplement(dataSource: userDefDataSource)
-        let updateDefDataUseCase = UpdateDailyProgressImplementation(repository: userDefDataSourceRepository)
+        let updateDefDataUseCase = UpdateDailyProgressImplementation(fetchRepository: userDefDataSourceRepository, updateRepository: userDefDataSourceRepository)
         let fetchDefDataUseCase = FetchDailyProgressImplementation(repository: userDefDataSourceRepository)
 
         //View Model

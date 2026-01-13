@@ -7,6 +7,8 @@ import Combine
 final class HabitListViewModel: ObservableObject {
     
     @Published var habits: [Habit] = []
+    @Published var streak = 0
+    @Published var isComleted = false
     
     //Core Data
     private let deleteHabitUseCase: DeleteHabitUseCase
@@ -69,11 +71,19 @@ final class HabitListViewModel: ObservableObject {
     }
     
     //UserDef
-    func fetchDailyProgress() -> DailyProgress? {
-        fetchDailyProgressUseCase.execute()
+    func fetchDailyProgress() {
+        guard let model = fetchDailyProgressUseCase.execute() else { return }
+        streak = model.streak
+        isComleted = model.isComplete
     }
     
-    func updateDailyprogress(dailyProgress: DailyProgress) {
-        updateDailyProgressUseCase.execute(dailyProgress: dailyProgress)
+    func updateDailyprogress(isComplete: Bool, date: Date) {
+        updateDailyProgressUseCase.execute(isComplete: isComplete, for: date)
+        fetchDailyProgress()
+    }
+    
+    func clearDailyprogress() {
+        updateDailyProgressUseCase.clearDailyprogress()
+        fetchDailyProgress()
     }
 }

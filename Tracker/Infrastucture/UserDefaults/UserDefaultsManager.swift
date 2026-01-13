@@ -3,7 +3,7 @@ import Foundation
 
 
 final class UserDefaultsManager: DailyProgressDataSource {
-      
+
     private let userDefaults = UserDefaults.standard
     private let key = "DailyProgress"
     
