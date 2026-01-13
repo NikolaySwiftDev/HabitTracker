@@ -5,4 +5,5 @@ struct DailyProgress: Identifiable, Equatable, Codable {
     var lastCompleteDate: Date?
     var streak: Int
     var isComplete: Bool
+    var datesComplete: Set<Date>
 }

@@ -14,7 +14,7 @@ struct HabitListView: View {
                 showingCreateHabit.toggle()
             }
             
-            CalendarView(selectedDate: $selectedDate)
+            CalendarView(selectedDate: $selectedDate, completedDates: vm.datesComplete)
             
             List {
                 ForEach(vm.habits) { habit in

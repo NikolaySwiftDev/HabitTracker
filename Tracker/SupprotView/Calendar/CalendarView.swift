@@ -4,9 +4,12 @@ struct CalendarView: View {
     @Binding var selectedDate: Date
     @State private var dates: [Date] = []
     
+    let completedDates: Set<Date>
+
     private let calendar = Calendar.currentCalendar
-    private let daysBefore = 10
+    private let daysBefore = 7
     private let daysAfter = 10
+
     
     var body: some View {
         VStack(spacing: 0) {
@@ -18,14 +21,19 @@ struct CalendarView: View {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 0) {
                         ForEach(dates.indices, id: \.self) { index in
+                            let date = dates[index]
+                            
                             DayView(
-                                date: dates[index],
-                                isSelected: dates[index].isSameDay(as: selectedDate),
-                                isToday: dates[index].isSameDay(as: Date())
+                                date: date,
+                                isSelected: date.isSameDay(as: selectedDate),
+                                isToday: date.isSameDay(as: Date()),
+                                isCompleted: completedDates.contains {
+                                    $0.isSameDay(as: date)
+                                }
                             )
                             .id(index)
                             .onTapGesture {
-                                selectedDate = dates[index]
+                                selectedDate = date
                             }
                         }
                     }
@@ -63,16 +71,18 @@ struct DayView: View {
     let date: Date
     let isSelected: Bool
     let isToday: Bool
+    let isCompleted: Bool
+
     
     var body: some View {
         VStack(spacing: 4) {
             Text(date.dayOfWeekInitial)
                 .font(.caption)
-                .foregroundColor(isSelected ? .white : .gray)
+                .foregroundColor(isSelected ? .white : isCompleted ? .black : .gray)
             
             Text("\(date.dayNumber)")
                 .font(.fontSystem(size: 16, weight: .medium))
-                .foregroundColor(isSelected ? .white : .primary)
+                .foregroundColor(isSelected ? .white : isCompleted ? .black : .primary)
         }
         .frame(width: 40, height: 60)
         .background(
@@ -89,7 +99,7 @@ struct DayView: View {
     }
     
     private var backgroundColor: Color {
-        isSelected ? .black : .clear
+        isSelected ? .black : isCompleted ? .green.opacity(0.3) : .clear
     }
     
     private var borderColor: Color {
@@ -98,5 +108,5 @@ struct DayView: View {
 }
 
 #Preview {
-    CalendarView(selectedDate: .constant(Date()))
+    CalendarView(selectedDate: .constant(Date()), completedDates: [])
 }
