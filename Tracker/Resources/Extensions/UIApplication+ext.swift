@@ -8,4 +8,13 @@ extension UIApplication {
                    from: nil,
                    for: nil)
     }
+    
+    func openAppSettings() {
+        guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else { return }
+        if canOpenURL(settingsUrl) {
+            open(settingsUrl)
+        }
+    }
+    
+    
 }

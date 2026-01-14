@@ -11,7 +11,7 @@ struct CreateHabitView: View {
     @State var textEmoji: String = "🏃‍♀️"
     @State var date: Date = .now
     @State var counterDay: Int = 10
-    @State var isNotificationIsAuthorized: Bool = false
+//    @State var isNotificationIsAuthorized: Bool = false
     @State var toggle: Bool = false
     @State var notificationTime: Date = .now
     let action: ()->()
@@ -131,10 +131,10 @@ struct CreateHabitView: View {
                     }
                     
                     Toggle("", isOn: $toggle)
-                        .disabled(!isNotificationIsAuthorized)
+                        .disabled(!vm.isNotificationIsAuthorized)
                         .onTapGesture {
-                            if !isNotificationIsAuthorized {
-                                openAppSettings()
+                            if !vm.isNotificationIsAuthorized {
+                                UIApplication.shared.openAppSettings()
                             }
                         }
                     
@@ -164,14 +164,14 @@ struct CreateHabitView: View {
         .padding(.top)
         .onAppear {
             Task {
-                await checkNotificationIsEnable()
+                await vm.getNotificationStatus()
             }
         }
         .onChange(of: scenePhase) { newPhase in
             if newPhase == .active {
                 Task {
-                    await checkNotificationIsEnable()
-                    if !isNotificationIsAuthorized {
+                    await vm.getNotificationStatus()
+                    if !vm.isNotificationIsAuthorized {
                         toggle = false
                     }
                 }
@@ -184,51 +184,12 @@ struct CreateHabitView: View {
     
     func createbuttonAction () {
         let habitsID = UUID()
-        for dayOffset in 0..<counterDay {
-            if textEmoji.isEmpty {
-                textEmoji = "💡"
-            }
-            if let habitDate = Calendar.current.date(byAdding: .day, value: dayOffset, to: date) {
-                let habit = Habit(
-                    id: UUID(),
-                    habitsID: habitsID,
-                    title: text,
-                    emoji: textEmoji,
-                    isCompletedToday: false,
-                    createdAt: habitDate,
-                )
-                vm.createHabit(habit: habit)
-
-              
-                action()
-            }
-        }
+        vm.createHabitexecute(habitsID: habitsID, title: text, emoji: textEmoji, startDate: date, daysCount: counterDay)
         Task {
-            await createPersmision(id: habitsID.uuidString)
+            try? await vm.createDailyNotification(id: habitsID, title: text, notificationTime: notificationTime, daysCount: counterDay, startDate: date)
         }
-    }
-    
-    func createPersmision(id: String) async {
-        guard text != "", toggle else {return}
-        let hour = Calendar.current.component(.hour, from: notificationTime)
-        let minute = Calendar.current.component(.minute, from: notificationTime)
-        Task {
-          try? await vm.createDailyNotification(identifier: id, title: text, body: "Do habit - \(text)", hour: hour, minute: minute)
-        }
-    }
-    
-    func checkNotificationIsEnable() async {
-        await isNotificationIsAuthorized = vm.getNotificationStatus()
-    }
-    
-    private func openAppSettings() {
-        guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else {
-            return
-        }
-
-        if UIApplication.shared.canOpenURL(settingsUrl) {
-            UIApplication.shared.open(settingsUrl)
-        }
+        action()
+        
     }
 }
 

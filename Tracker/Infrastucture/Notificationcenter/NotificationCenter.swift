@@ -37,17 +37,21 @@ final class NotificationManager: NotificationDataSource {
     }
     
     // MARK: - Create Daily Notification
-    func createDailyNotification(identifier: String, title: String, body: String, hour: Int, minute: Int) async throws {
+    func createDailyNotification(identifier: String, title: String, body: String, date: Date) async throws {
         let content = UNMutableNotificationContent()
         content.title = title
         content.body = body
         content.sound = .defaultRingtone
         
-        var dateComponents = DateComponents()
-        dateComponents.hour = hour
-        dateComponents.minute = minute
-        
-        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
+        guard date > Date() else { return }
+
+        let trigger = UNCalendarNotificationTrigger(
+            dateMatching: Calendar.current.dateComponents(
+                [.year, .month, .day, .hour, .minute],
+                from: date
+            ),
+            repeats: false
+        )
         
         // Создаем запрос
         let request = UNNotificationRequest(
@@ -58,18 +62,29 @@ final class NotificationManager: NotificationDataSource {
         
         // Добавляем запрос в центр уведомлений
         try await center.add(request)
-        print("Daily notification scheduled for \(hour):\(minute)")
+        print("Daily notification scheduled for \(trigger.dateComponents.hour):\(trigger.dateComponents.minute)")
     }
     
     // MARK: - Remove Notification
     func removeNotification(identifier: String) {
-        center.removePendingNotificationRequests(withIdentifiers: [identifier])
-        print("Notification with identifier \(identifier) removed")
+        center.getPendingNotificationRequests { [weak self] requests in
+            guard let self = self else { return }
+            // Фильтруем только те идентификаторы, которые начинаются с id
+            let identifiersToRemove = requests
+                .map { $0.identifier }
+                .filter { $0.hasPrefix(identifier) }
+            
+            // Удаляем все pending и доставленные уведомления
+            center.removePendingNotificationRequests(withIdentifiers: identifiersToRemove)
+            center.removeDeliveredNotifications(withIdentifiers: identifiersToRemove)
+            
+            print("Removed notifications: \(identifiersToRemove)")
+        }
     }
     
     // MARK: - Remove All Notifications
-    func removeAllNotifications() {
-        center.removeAllPendingNotificationRequests()
-        print("All notifications removed")
-    }
+//    func removeAllNotifications() {
+//        center.removeAllPendingNotificationRequests()
+//        print("All notifications removed")
+//    }
 }

@@ -5,7 +5,6 @@ struct CalendarView: View {
     @State private var dates: [Date] = []
     
     let completedDates: Set<Date>
-
     private let calendar = Calendar.currentCalendar
     private let daysBefore = 7
     private let daysAfter = 10
@@ -47,7 +46,6 @@ struct CalendarView: View {
         }
         .onAppear {
             generateDates()
-            
         }
     }
     

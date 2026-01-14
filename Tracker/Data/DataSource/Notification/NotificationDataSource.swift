@@ -7,7 +7,7 @@ protocol NotificationDataSource: AnyObject {
     func getNotificationStatus() async -> Bool
 
     // MARK: - Notification Creation
-    func createDailyNotification(identifier: String, title: String, body: String, hour: Int, minute: Int) async throws
+    func createDailyNotification(identifier: String, title: String, body: String, date: Date) async throws
     
     // MARK: - Notification Management
     func removeNotification(identifier: String)
