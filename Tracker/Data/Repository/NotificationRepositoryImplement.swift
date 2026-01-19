@@ -3,7 +3,7 @@
 import Foundation
 
 final class NotificationRepositoryImplement: RequestNotificationRepository, DeleteNotificationRepository, CreateNotificationRepository {
-    
+        
     private let dataSource: NotificationDataSource
     
     init(dataSource: NotificationDataSource) {
@@ -18,8 +18,12 @@ final class NotificationRepositoryImplement: RequestNotificationRepository, Dele
         await dataSource.getNotificationStatus()
     }
     
-    func removeNotification(identifier: String) {
-        dataSource.removeNotification(identifier: identifier)
+    func removeAllNotification(identifier: String) {
+        dataSource.removeAllNotification(identifier: identifier)
+    }
+    
+    func removeNotificationFromDay(identifier: String) async {
+        await dataSource.removeNotificationFromDay(identifier: identifier)
     }
     
     func createDailyNotification(identifier: String, title: String, body: String, date: Date) async throws {

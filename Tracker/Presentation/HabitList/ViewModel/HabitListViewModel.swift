@@ -67,8 +67,12 @@ final class HabitListViewModel: ObservableObject {
         await requestNotificationUseCase.requestNotificationPermission()
     }
     
-    func removeNotification(identifier: String) {
-        deleteNotifiactionUseCase.removeNotification(identifier: identifier)
+    func removeAllNotification(identifier: String) {
+        deleteNotifiactionUseCase.removeAllNotification(identifier: identifier)
+    }
+    
+    func removeNotificationFromDay(identifier: String, day: Int) async {
+        await deleteNotifiactionUseCase.removeNotificationFromDay(identifier: identifier, day: day)
     }
     
     //UserDef
@@ -76,7 +80,7 @@ final class HabitListViewModel: ObservableObject {
         guard let model = fetchDailyProgressUseCase.execute() else { return }
         streak = model.streak
         isComleted = model.isComplete
-        datesComplete = model.datesComplete ?? []
+        datesComplete = model.datesComplete
     }
     
     func updateDailyprogress(isComplete: Bool, date: Date) {

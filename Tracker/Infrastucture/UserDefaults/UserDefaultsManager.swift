@@ -4,7 +4,7 @@ import Foundation
 
 final class UserDefaultsManager: DailyProgressDataSource {
 
-    private let userDefaults = UserDefaults.standard
+    private let userDefaults = UserDefaults.init(suiteName: "group.com.Tracker.Tracker0991")!
     private let key = "DailyProgress"
     
     func updateDailyProgress(dailyProgress: DailyProgress) {

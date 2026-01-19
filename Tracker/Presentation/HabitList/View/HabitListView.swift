@@ -30,16 +30,17 @@ struct HabitListView: View {
                                 updateDDailyprogress = false
                             }
                         }
-                        
+                        Task {
+                            await vm.removeNotificationFromDay(identifier: habit.habitsID.uuidString, day: habit.dayCount)
+                        }
                     })
                     .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 0))
                     .listRowSeparator(.hidden)
-                    
                     .swipeActions(edge: .trailing, allowsFullSwipe: true) {
                         Button(role: .destructive) {
                             let id = habit.habitsID.uuidString
                             vm.deleteHabit(id: id)
-                            vm.removeNotification(identifier: id)
+                            vm.removeAllNotification(identifier: id)
                             vm.fetchHabits(date: selectedDate)
                             if vm.habits.isEmpty {
                                 vm.clearDailyprogress()
@@ -65,7 +66,7 @@ struct HabitListView: View {
                 
                 Text("Streak \(vm.streak)")
                     .foregroundStyle(.black)
-                    .font(.fontSystem(size: 20, weight: .semibold))
+                    .font(.fontSystem(size: 16, weight: .semibold))
             } else {
                 Text("Do \(vm.checkCountsIsAllHabitsComplete()) habits")
                     .foregroundStyle(.black)
@@ -73,9 +74,8 @@ struct HabitListView: View {
                 
                 Text("Streak \(vm.streak)")
                     .foregroundStyle(.black)
-                    .font(.fontSystem(size: 20, weight: .semibold))
+                    .font(.fontSystem(size: 16, weight: .semibold))
             }
-            
         }
         .padding()
         .onAppear {
@@ -89,9 +89,6 @@ struct HabitListView: View {
             updateDDailyprogress = !vm.checkIsAllHabitsComplete()
             vm.fetchHabits(date: newDate)
             vm.fetchDailyProgress()
-        }
-        .onChange(of: vm.habits.isEmpty) { isEmpty in
-          
         }
         .sheet(isPresented: $showingCreateHabit) {
             CreateHabitView(vm: Assembly.createCreateHabitViewModel(), action: {

@@ -1,5 +1,6 @@
-//
-//
-//protocol BuildWidgetSnapshotRepository: AnyObject {
-//    func execute() -> WidgetHabitSnapshot?
-//}
+
+import Foundation
+
+protocol BuildWidgetSnapshotRepository: AnyObject {
+    func execute() -> WidgetHabitSnapshot?
+}

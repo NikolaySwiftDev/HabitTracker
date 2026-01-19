@@ -13,13 +13,7 @@ final class CreateNotificationImplement: CreateNotificationUseCase {
         self.repository = repository
     }
     
-    func createDailyNotification(
-        id: UUID,
-        notificationTime: Date,
-        title: String,
-        daysCount: Int,
-        startDate: Date
-    ) async throws {
+    func createDailyNotification(id: UUID, notificationTime: Date, title: String, daysCount: Int, startDate: Date) async throws {
         let calendar = Calendar.current
         let hour = calendar.component(.hour, from: notificationTime)
         let minute = calendar.component(.minute, from: notificationTime)
@@ -30,6 +24,7 @@ final class CreateNotificationImplement: CreateNotificationUseCase {
             
             // Уникальный идентификатор для каждого дня
             let identifier = "\(id.uuidString)_\(dayOffset)"
+            print(identifier)
             
             let body = "Do habit - \(title)"
             

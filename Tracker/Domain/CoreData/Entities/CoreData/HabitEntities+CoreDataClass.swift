@@ -21,6 +21,7 @@ extension HabitEntities {
     @NSManaged public var title: String?
     @NSManaged public var emoji: String?
     @NSManaged public var isCompletedToday: Bool
+    @NSManaged public var dayCount: Int
     @NSManaged public var createdAt: Date?
 
 }

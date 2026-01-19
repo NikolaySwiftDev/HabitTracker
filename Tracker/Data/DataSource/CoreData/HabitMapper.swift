@@ -11,6 +11,7 @@ struct HabitMapper {
         entity.emoji = habit.emoji
         entity.isCompletedToday = habit.isCompletedToday
         entity.createdAt = habit.createdAt
+        entity.dayCount = habit.dayCount
         return entity
     }
     
@@ -20,7 +21,8 @@ struct HabitMapper {
                           title: entity.title ?? "",
                           emoji: entity.emoji ?? "",
                           isCompletedToday: entity.isCompletedToday,
-                          createdAt: entity.createdAt ?? .now)
+                          createdAt: entity.createdAt ?? .now,
+                          dayCount: entity.dayCount)
         return habit
     }
 }

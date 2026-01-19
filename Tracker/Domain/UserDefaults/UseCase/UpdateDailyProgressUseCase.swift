@@ -45,8 +45,8 @@ final class UpdateDailyProgressImplementation: UpdateDailyProgressUseCase {
         }
         model.isComplete = isComplete
         
-        print("Model streak", model.streak)
-        print("Model isComplete", model.isComplete)
-        print("Model datesComp", model.datesComplete)
+//        print("Model streak", model.streak)
+//        print("Model isComplete", model.isComplete)
+//        print("Model datesComp", model.datesComplete)
     }
 }

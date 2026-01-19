@@ -2,8 +2,8 @@
 import Foundation
 
 protocol DeleteNotificationUseCase: AnyObject {
-    func removeNotification(identifier: String)
-//    func removeAllNotifications()
+    func removeAllNotification(identifier: String)
+    func removeNotificationFromDay(identifier: String, day: Int) async
 }
 
 final class DeleteNotificationImplement: DeleteNotificationUseCase {
@@ -14,12 +14,13 @@ final class DeleteNotificationImplement: DeleteNotificationUseCase {
         self.repository = repository
     }
     
-    func removeNotification(identifier: String) {
-        repository.removeNotification(identifier: identifier)
+    func removeAllNotification(identifier: String) {
+        repository.removeAllNotification(identifier: identifier)
     }
     
-//    func removeAllNotifications() {
-//        repository.removeAllNotifications()
-//    }
+    func removeNotificationFromDay(identifier: String, day: Int) async {
+        let newID = "\(identifier)_\(day)"
+        try? await repository.removeNotificationFromDay(identifier: newID)
+    }
 
 }

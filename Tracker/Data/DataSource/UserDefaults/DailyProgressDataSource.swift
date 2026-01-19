@@ -3,8 +3,13 @@ import Foundation
 import CoreData
 
 
-protocol DailyProgressDataSource: AnyObject {
-    func updateDailyProgress(dailyProgress: DailyProgress)
-    
+protocol DailyProgressReadableDataSource: AnyObject {
     func getDailyProgress() -> DailyProgress?
 }
+
+protocol DailyProgressWritableDataSource: AnyObject {
+    func updateDailyProgress(dailyProgress: DailyProgress)
+}
+
+typealias DailyProgressDataSource =
+    DailyProgressReadableDataSource & DailyProgressWritableDataSource

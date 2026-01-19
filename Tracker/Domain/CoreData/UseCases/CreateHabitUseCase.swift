@@ -28,6 +28,7 @@ final class CreateHabitImplement: CreateHabitUseCase {
                     emoji: emojiNew,
                     isCompletedToday: false,
                     createdAt: habitDate,
+                    dayCount: dayOffset
                 )
                 repository.createHabit(habit: habit)
             }

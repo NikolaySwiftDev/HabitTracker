@@ -10,6 +10,6 @@ protocol NotificationDataSource: AnyObject {
     func createDailyNotification(identifier: String, title: String, body: String, date: Date) async throws
     
     // MARK: - Notification Management
-    func removeNotification(identifier: String)
-    func removeAllNotifications()
+    func removeAllNotification(identifier: String)
+    func removeNotificationFromDay(identifier: String) async
 }

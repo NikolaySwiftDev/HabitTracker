@@ -2,6 +2,6 @@
 import Foundation
 
 protocol DeleteNotificationRepository: AnyObject {
-    func removeNotification(identifier: String)
-//    func removeAllNotifications()
+    func removeAllNotification(identifier: String)
+    func removeNotificationFromDay(identifier: String) async throws
 }

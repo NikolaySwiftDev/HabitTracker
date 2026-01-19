@@ -7,4 +7,5 @@ struct Habit: Identifiable, Equatable {
     let emoji: String
     var isCompletedToday: Bool
     let createdAt: Date
+    let dayCount: Int
 }

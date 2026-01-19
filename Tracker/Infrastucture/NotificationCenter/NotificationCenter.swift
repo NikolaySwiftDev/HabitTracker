@@ -2,6 +2,7 @@ import Foundation
 import UserNotifications
 
 final class NotificationManager: NotificationDataSource {
+
     
     private let center = UNUserNotificationCenter.current()
     
@@ -62,11 +63,10 @@ final class NotificationManager: NotificationDataSource {
         
         // Добавляем запрос в центр уведомлений
         try await center.add(request)
-        print("Daily notification scheduled for \(trigger.dateComponents.hour):\(trigger.dateComponents.minute)")
     }
     
     // MARK: - Remove Notification
-    func removeNotification(identifier: String) {
+    func removeAllNotification(identifier: String) {
         center.getPendingNotificationRequests { [weak self] requests in
             guard let self = self else { return }
             // Фильтруем только те идентификаторы, которые начинаются с id
@@ -83,8 +83,28 @@ final class NotificationManager: NotificationDataSource {
     }
     
     // MARK: - Remove All Notifications
-//    func removeAllNotifications() {
-//        center.removeAllPendingNotificationRequests()
-//        print("All notifications removed")
-//    }
+    func removeNotificationFromDay(identifier: String) async {
+        let pending = await withCheckedContinuation { continuation in
+            center.getPendingNotificationRequests {
+                continuation.resume(returning: $0)
+            }
+        }
+        let exists = pending.contains { $0.identifier == identifier }
+        guard exists else { return }
+
+        center.removePendingNotificationRequests(withIdentifiers: [identifier])
+        center.removeDeliveredNotifications(withIdentifiers: [identifier])
+    }
+    
+    
+    
+    //    func removeAllNotifications() {
+    //        center.removeAllPendingNotificationRequests()
+    //        print("All notifications removed")
+    //    }
+    
+}
+
+enum NotificationError: Error {
+    case identifierNotFound
 }

@@ -1,74 +1,80 @@
-//
-//import ActivityKit
-//import WidgetKit
-//import SwiftUI
-//
-//struct HabitWidgetAttributes: ActivityAttributes {
-//    public struct ContentState: Codable, Hashable {
-//        // Dynamic stateful properties about your activity go here!
-//        var emoji: String
-//    }
-//
-//    // Fixed non-changing properties about your activity go here!
-//    var name: String
-//}
-//
-//struct HabitWidgetLiveActivity: Widget {
-//    var body: some WidgetConfiguration {
-//        ActivityConfiguration(for: HabitWidgetAttributes.self) { context in
-//            // Lock screen/banner UI goes here
-//            VStack {
-//                Text("Hello \(context.state.emoji)")
-//            }
-//            .activityBackgroundTint(Color.cyan)
-//            .activitySystemActionForegroundColor(Color.black)
-//
-//        } dynamicIsland: { context in
-//            DynamicIsland {
-//                // Expanded UI goes here.  Compose the expanded UI through
-//                // various regions, like leading/trailing/center/bottom
-//                DynamicIslandExpandedRegion(.leading) {
-//                    Text("Leading")
-//                }
-//                DynamicIslandExpandedRegion(.trailing) {
-//                    Text("Trailing")
-//                }
-//                DynamicIslandExpandedRegion(.bottom) {
-//                    Text("Bottom \(context.state.emoji)")
-//                    // more content
-//                }
-//            } compactLeading: {
-//                Text("L")
-//            } compactTrailing: {
-//                Text("T \(context.state.emoji)")
-//            } minimal: {
-//                Text(context.state.emoji)
-//            }
-//            .widgetURL(URL(string: "http://www.apple.com"))
-//            .keylineTint(Color.red)
-//        }
-//    }
-//}
-//
-//extension HabitWidgetAttributes {
-//    fileprivate static var preview: HabitWidgetAttributes {
-//        HabitWidgetAttributes(name: "World")
-//    }
-//}
-//
-//extension HabitWidgetAttributes.ContentState {
-//    fileprivate static var smiley: HabitWidgetAttributes.ContentState {
-//        HabitWidgetAttributes.ContentState(emoji: "😀")
-//     }
-//     
-//     fileprivate static var starEyes: HabitWidgetAttributes.ContentState {
-//         HabitWidgetAttributes.ContentState(emoji: "🤩")
-//     }
-//}
-//
-//#Preview("Notification", as: .content, using: HabitWidgetAttributes.preview) {
-//   HabitWidgetLiveActivity()
-//} contentStates: {
-//    HabitWidgetAttributes.ContentState.smiley
-//    HabitWidgetAttributes.ContentState.starEyes
-//}
+
+import ActivityKit
+import WidgetKit
+import SwiftUI
+
+
+struct HabitActivityAttributes: ActivityAttributes {
+    public struct ContentState: Codable, Hashable {
+        var streak: Int
+        var isCompletedToday: Bool
+    }
+
+    var habitName: String
+}
+
+
+struct HabitWidgetLiveActivity: Widget {
+    var body: some WidgetConfiguration {
+        ActivityConfiguration(for: HabitActivityAttributes.self) { context in
+            // Lock Screen / Banner UI
+            ZStack {
+                LinearGradient(
+                    colors: context.state.isCompletedToday
+                        ? [Color.green, Color.green.opacity(0.7)]
+                        : [Color.red, Color.red.opacity(0.7)],
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+                .ignoresSafeArea()
+
+                VStack(spacing: 8) {
+                    Text(context.attributes.habitName)
+                        .font(.caption)
+                        .foregroundColor(.white)
+
+                    Text("🔥 Streak: \(context.state.streak)")
+                        .font(.title)
+                        .bold()
+                        .foregroundColor(.white)
+
+                    Text(context.state.isCompletedToday ? "Completed ✅" : "Not completed ❌")
+                        .font(.caption2)
+                        .foregroundColor(.white)
+                }
+                .padding()
+            }
+
+        } dynamicIsland: { context in
+            DynamicIsland {
+                DynamicIslandExpandedRegion(.leading) {
+                    Text("🔥")
+                        .font(.headline)
+                }
+                DynamicIslandExpandedRegion(.trailing) {
+                    Text("\(context.state.streak)")
+                        .font(.headline)
+                }
+                DynamicIslandExpandedRegion(.bottom) {
+                    Text(context.state.isCompletedToday ? "Completed ✅" : "Not done ❌")
+                        .font(.caption)
+                }
+            } compactLeading: {
+                Text("🔥")
+            } compactTrailing: {
+                Text("\(context.state.streak)")
+            } minimal: {
+                Text(context.state.isCompletedToday ? "✅" : "❌")
+            }
+            .widgetURL(URL(string: "habitapp://habit"))
+            .keylineTint(Color.green)
+        }
+    }
+}
+
+#Preview("Lock Screen", as: .content, using: HabitActivityAttributes(habitName: "Workout")) {
+    HabitWidgetLiveActivity()
+} contentStates: {
+    HabitActivityAttributes.ContentState(streak: 5, isCompletedToday: true)
+    HabitActivityAttributes.ContentState(streak: 3, isCompletedToday: false)
+}
