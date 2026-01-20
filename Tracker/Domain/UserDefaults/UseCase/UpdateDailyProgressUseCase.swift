@@ -20,7 +20,7 @@ final class UpdateDailyProgressImplementation: UpdateDailyProgressUseCase {
     }
     
     func execute(isComplete: Bool, for date: Date) {
-        guard var model = fetchRepository.fetchDailyProgress() else {
+        guard var model = fetchRepository.getDailyProgress() else {
             var newModel = DailyProgress(lastCompleteDate: nil, streak: 0, isComplete: false, datesComplete: [])
             uptadeModel(&newModel, isComplete: isComplete, date: date)
             updateRepository.updateDailyProgress(dailyProgress: newModel)
@@ -45,6 +45,7 @@ final class UpdateDailyProgressImplementation: UpdateDailyProgressUseCase {
         }
         model.isComplete = isComplete
         
+//        print("Model update")
 //        print("Model streak", model.streak)
 //        print("Model isComplete", model.isComplete)
 //        print("Model datesComp", model.datesComplete)

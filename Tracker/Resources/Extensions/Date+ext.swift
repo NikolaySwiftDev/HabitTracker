@@ -5,6 +5,12 @@ extension Date {
         Calendar.current.isDate(self, inSameDayAs: date)
     }
     
+    var dayOnly: Date {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone.current
+        return calendar.startOfDay(for: self)
+    }
+    
     // Начало дня
     var startOfDay: Date {
         Calendar.current.startOfDay(for: self)

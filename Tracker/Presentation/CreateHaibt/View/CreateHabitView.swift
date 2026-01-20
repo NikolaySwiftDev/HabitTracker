@@ -9,9 +9,8 @@ struct CreateHabitView: View {
     
     @State var text: String = "Sport"
     @State var textEmoji: String = "🏃‍♀️"
-    @State var date: Date = .now
+    @State var date: Date
     @State var counterDay: Int = 10
-//    @State var isNotificationIsAuthorized: Bool = false
     @State var toggle: Bool = false
     @State var notificationTime: Date = .now
     let action: ()->()
@@ -184,7 +183,7 @@ struct CreateHabitView: View {
     
     func createbuttonAction () {
         let habitsID = UUID()
-        vm.createHabitexecute(habitsID: habitsID, title: text, emoji: textEmoji, startDate: date, daysCount: counterDay)
+        vm.createHabite(habitsID: habitsID, title: text, emoji: textEmoji, startDate: date, daysCount: counterDay)
         Task {
             try? await vm.createDailyNotification(id: habitsID, title: text, notificationTime: notificationTime, daysCount: counterDay, startDate: date)
         }
@@ -194,7 +193,7 @@ struct CreateHabitView: View {
 }
 
 #Preview {
-    CreateHabitView(vm: Assembly.createCreateHabitViewModel(), action: {})
+    CreateHabitView(vm: Assembly.createCreateHabitViewModel(), date: .now, action: {})
 }
 
 

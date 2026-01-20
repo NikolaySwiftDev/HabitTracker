@@ -12,7 +12,7 @@ final class FetchDailyProgressImplementation: FetchDailyProgressUseCase {
     }
     
     func execute() -> DailyProgress? {
-        repository.fetchDailyProgress()
+        repository.getDailyProgress()
     }
 }
 

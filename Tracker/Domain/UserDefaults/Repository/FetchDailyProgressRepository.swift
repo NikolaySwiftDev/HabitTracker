@@ -2,5 +2,5 @@
 import Foundation
 
 protocol FetchDailyProgressRepository: AnyObject {
-    func fetchDailyProgress() -> DailyProgress?
+    func getDailyProgress() -> DailyProgress?
 }

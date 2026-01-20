@@ -18,7 +18,7 @@ final class CreateHabitViewModel: ObservableObject {
         self.createNotifiactionUseCase = createNotifiactionUseCase
     }
     
-    func createHabitexecute(habitsID: UUID, title: String, emoji: String, startDate: Date, daysCount: Int) {
+    func createHabite(habitsID: UUID, title: String, emoji: String, startDate: Date, daysCount: Int) {
         createHabitUseCase.execute(habitsID: habitsID, title: title, emoji: emoji, startDate: startDate, daysCount: daysCount)
     }
     

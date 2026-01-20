@@ -44,14 +44,22 @@ final class HabitListViewModel: ObservableObject {
     //Core Data
     func fetchHabits(date: Date) {
         habits = fetchHabitsUseCase.execute(date: date)
+        fetchDailyProgress()
     }
     
-    func deleteHabit(id: String) {
+    func deleteHabit(id: String, date: Date) {
         deleteHabitUseCase.execute(id: id)
+        removeAllNotification(identifier: id)
+        fetchHabits(date: date)
+        if habits.isEmpty {
+            clearDailyprogress()
+        }
     }
     
-    func updateHabit(habitId: String, habit: Habit) {
+    func updateHabit(habitId: String, habit: Habit, date: Date) {
         updateHabitUseCase.execute(habitId: habitId, habit: habit)
+        fetchHabits(date: date)
+        updateDailyprogress(date: date)
     }
         
     func checkIsAllHabitsComplete() -> Bool {
@@ -80,12 +88,21 @@ final class HabitListViewModel: ObservableObject {
         guard let model = fetchDailyProgressUseCase.execute() else { return }
         streak = model.streak
         isComleted = model.isComplete
-        datesComplete = model.datesComplete
+        datesComplete = Set(
+            model.datesComplete.map { $0.dayOnly }
+        )
     }
     
-    func updateDailyprogress(isComplete: Bool, date: Date) {
-        updateDailyProgressUseCase.execute(isComplete: isComplete, for: date)
+    func updateDailyprogress(date: Date) {
+        if checkIsAllHabitsComplete() && !datesComplete.contains(date.dayOnly) {
+            updateDailyProgressUseCase.execute(isComplete: true, for: date.dayOnly)
+        } else {
+            if !checkIsAllHabitsComplete() && datesComplete.contains(date.dayOnly) {
+                updateDailyProgressUseCase.execute(isComplete: false, for: date.dayOnly)
+            }
+        }
         fetchDailyProgress()
+        print(datesComplete)
     }
     
     func clearDailyprogress() {

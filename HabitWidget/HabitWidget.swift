@@ -76,7 +76,7 @@ struct HabitWidgetEntryView: View {
                 if let snapshot = entry.snapshot {
                     HStack(alignment: .center, spacing: 0) {
                         Text("🔥")
-                            .font(.system(size: 13, weight: .black, design: .serif))
+                            .font(.system(size: 15, weight: .black, design: .serif))
                             .foregroundColor(.white)
                         Text(" Streak")
                             .font(.system(size: 19, weight: .black, design: .serif))

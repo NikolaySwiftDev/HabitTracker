@@ -24,7 +24,7 @@ final class CreateNotificationImplement: CreateNotificationUseCase {
             
             // Уникальный идентификатор для каждого дня
             let identifier = "\(id.uuidString)_\(dayOffset)"
-            print(identifier)
+//            print(identifier)
             
             let body = "Do habit - \(title)"
             

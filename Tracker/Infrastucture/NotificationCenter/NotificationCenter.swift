@@ -78,7 +78,7 @@ final class NotificationManager: NotificationDataSource {
             center.removePendingNotificationRequests(withIdentifiers: identifiersToRemove)
             center.removeDeliveredNotifications(withIdentifiers: identifiersToRemove)
             
-            print("Removed notifications: \(identifiersToRemove)")
+//            print("Removed notifications: \(identifiersToRemove)")
         }
     }
     

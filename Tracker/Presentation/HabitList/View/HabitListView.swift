@@ -5,7 +5,6 @@ struct HabitListView: View {
     @StateObject var vm: HabitListViewModel
     @State private var selectedDate = Date()
     @State private var showingCreateHabit = false
-    @State private var updateDDailyprogress = false
     
     var body: some View {
         VStack(spacing: 20) {
@@ -19,17 +18,7 @@ struct HabitListView: View {
             List {
                 ForEach(vm.habits) { habit in
                     HabitListCell(habit: habit, action: {
-                        vm.updateHabit(habitId: habit.id.uuidString, habit: habit)
-                        vm.fetchHabits(date: selectedDate)
-                        if vm.checkIsAllHabitsComplete() {
-                            updateDDailyprogress = true
-                            vm.updateDailyprogress(isComplete: true, date: selectedDate)
-                        } else {
-                            if updateDDailyprogress {
-                                vm.updateDailyprogress(isComplete: false, date: selectedDate)
-                                updateDDailyprogress = false
-                            }
-                        }
+                        vm.updateHabit(habitId: habit.id.uuidString, habit: habit, date: selectedDate)
                         Task {
                             await vm.removeNotificationFromDay(identifier: habit.habitsID.uuidString, day: habit.dayCount)
                         }
@@ -39,12 +28,7 @@ struct HabitListView: View {
                     .swipeActions(edge: .trailing, allowsFullSwipe: true) {
                         Button(role: .destructive) {
                             let id = habit.habitsID.uuidString
-                            vm.deleteHabit(id: id)
-                            vm.removeAllNotification(identifier: id)
-                            vm.fetchHabits(date: selectedDate)
-                            if vm.habits.isEmpty {
-                                vm.clearDailyprogress()
-                            }
+                            vm.deleteHabit(id: id, date: selectedDate)
                         } label: {
                             VStack {
                                 Image(systemName: "trash")
@@ -59,8 +43,31 @@ struct HabitListView: View {
             
             Spacer()
             
-            if vm.checkIsAllHabitsComplete() {
-                Text(vm.habits.isEmpty ? "No habits" : "Done all habits")
+            creacteCompletedBlock(isShow: vm.checkIsAllHabitsComplete(), emptyText: vm.habits.isEmpty)
+
+        }
+        .padding()
+        .onAppear {
+            vm.fetchHabits(date: selectedDate)
+            Task {
+                await vm.requestNotificationPersmission()
+            }
+        }
+        .onChange(of: selectedDate) { newDate in
+            vm.fetchHabits(date: newDate)
+        }
+        .sheet(isPresented: $showingCreateHabit) {
+            CreateHabitView(vm: Assembly.createCreateHabitViewModel(), date: selectedDate, action: {
+                showingCreateHabit = false
+                vm.fetchHabits(date: selectedDate)
+            })
+        }
+    }
+    
+    private func creacteCompletedBlock(isShow: Bool, emptyText: Bool) ->  some View {
+        VStack {
+            if isShow {
+                Text(emptyText ? "No habits" : "Done all habits")
                     .foregroundStyle(.black)
                     .font(.fontSystem(size: 20, weight: .semibold))
                 
@@ -76,26 +83,6 @@ struct HabitListView: View {
                     .foregroundStyle(.black)
                     .font(.fontSystem(size: 16, weight: .semibold))
             }
-        }
-        .padding()
-        .onAppear {
-            vm.fetchHabits(date: selectedDate)
-            vm.fetchDailyProgress()
-            Task {
-                await vm.requestNotificationPersmission()
-            }
-        }
-        .onChange(of: selectedDate) { newDate in
-            updateDDailyprogress = !vm.checkIsAllHabitsComplete()
-            vm.fetchHabits(date: newDate)
-            vm.fetchDailyProgress()
-        }
-        .sheet(isPresented: $showingCreateHabit) {
-            CreateHabitView(vm: Assembly.createCreateHabitViewModel(), action: {
-                showingCreateHabit = false
-                vm.fetchHabits(date: selectedDate)
-                vm.fetchDailyProgress()
-            })
         }
     }
 }
