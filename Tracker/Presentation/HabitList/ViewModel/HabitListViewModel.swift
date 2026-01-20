@@ -56,12 +56,21 @@ final class HabitListViewModel: ObservableObject {
         }
     }
     
-    func updateHabit(habitId: String, habit: Habit, date: Date) {
-        updateHabitUseCase.execute(habitId: habitId, habit: habit)
-        fetchHabits(date: date)
-        updateDailyprogress(date: date)
+    func updateHabit(habitId: String, habit: Habit, date: Date) async -> Bool {
+        do {
+            try await updateHabitUseCase.execute(habitId: habitId, habit: habit, date: date)
+            fetchHabits(date: date)
+            updateDailyprogress(date: date)
+            return false
+        } catch {
+            return true
+        }
     }
-        
+    
+    func canUpdateHabit(for date: Date) -> Bool {
+        date.dayOnly <= Date().dayOnly
+    }
+
     func checkIsAllHabitsComplete() -> Bool {
         habits.allSatisfy { $0.isCompletedToday }
     }

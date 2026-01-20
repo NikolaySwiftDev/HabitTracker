@@ -6,7 +6,7 @@ import SwiftUI
 struct HabitWidgetBundle: WidgetBundle {
     var body: some Widget {
         HabitWidget()
-        HabitWidgetControl()
-        HabitWidgetLiveActivity()
+//        HabitWidgetControl()
+//        HabitWidgetLiveActivity()
     }
 }

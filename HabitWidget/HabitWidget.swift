@@ -76,18 +76,24 @@ struct HabitWidgetEntryView: View {
                 if let snapshot = entry.snapshot {
                     HStack(alignment: .center, spacing: 0) {
                         Text("🔥")
-                            .font(.system(size: 15, weight: .black, design: .serif))
+                            .font(.system(size: 12, weight: .black, design: .serif))
                             .foregroundColor(.white)
                         Text(" Streak")
-                            .font(.system(size: 19, weight: .black, design: .serif))
+                            .font(.system(size: 18, weight: .black, design: .serif))
                             .foregroundColor(.white)
                     }
                     
                     
                     Text("\(snapshot.streak)")
-                        .font(.system(size: 32, weight: .black, design: .serif))
+                        .font(.system(size: 30, weight: .black, design: .serif))
                         .bold()
                         .foregroundColor(.white)
+                    
+                    HStack(alignment: .center, spacing: 0) {
+                        Text("\(snapshot.isCompletedToday ? "Completed ✅" : "Not completed ❌")")
+                            .font(.system(size: 12, weight: .semibold, design: .serif))
+                            .foregroundColor(.white)
+                    }
                     
                 } else {
                     Text("No data")
@@ -96,7 +102,6 @@ struct HabitWidgetEntryView: View {
                 }
             }
         }
-        .cornerRadius(16)
     }
 }
 

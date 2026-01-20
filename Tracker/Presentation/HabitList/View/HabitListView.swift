@@ -5,6 +5,8 @@ struct HabitListView: View {
     @StateObject var vm: HabitListViewModel
     @State private var selectedDate = Date()
     @State private var showingCreateHabit = false
+    @State private var showFutureDateAlert = false
+
     
     var body: some View {
         VStack(spacing: 20) {
@@ -18,8 +20,8 @@ struct HabitListView: View {
             List {
                 ForEach(vm.habits) { habit in
                     HabitListCell(habit: habit, action: {
-                        vm.updateHabit(habitId: habit.id.uuidString, habit: habit, date: selectedDate)
                         Task {
+                            showFutureDateAlert = await vm.updateHabit(habitId: habit.id.uuidString, habit: habit, date: selectedDate)
                             await vm.removeNotificationFromDay(identifier: habit.habitsID.uuidString, day: habit.dayCount)
                         }
                     })
@@ -31,8 +33,8 @@ struct HabitListView: View {
                             vm.deleteHabit(id: id, date: selectedDate)
                         } label: {
                             VStack {
-                                Image(systemName: "trash")
-                                Text("Delete")
+                                Image(systemName: HabitListInfo.deleteButtonImage)
+                                Text(HabitListInfo.deleteButtonTitle)
                                     .font(.caption)
                             }
                         }
@@ -62,12 +64,18 @@ struct HabitListView: View {
                 vm.fetchHabits(date: selectedDate)
             })
         }
+        .alert(HabitListInfo.titleAlert,
+               isPresented: $showFutureDateAlert) {
+            Button(HabitListInfo.buttonAlert, role: .cancel) {}
+        } message: {
+            Text(HabitListInfo.messageAlert)
+        }
     }
     
     private func creacteCompletedBlock(isShow: Bool, emptyText: Bool) ->  some View {
         VStack {
             if isShow {
-                Text(emptyText ? "No habits" : "Done all habits")
+                Text(emptyText ? HabitListInfo.noHabits : HabitListInfo.doneHabits)
                     .foregroundStyle(.black)
                     .font(.fontSystem(size: 20, weight: .semibold))
                 
@@ -89,4 +97,18 @@ struct HabitListView: View {
 
 #Preview {
     HabitListView(vm: Assembly.createHabitListViewModel())
+}
+
+fileprivate struct HabitListInfo {
+    static let noHabits = "No habits"
+    static let doneHabits = "Done all habits"
+    
+    static let titleAlert = "You can't mark it in advance"
+    static let messageAlert = "Habits can only be marked for today or for the past few days."
+    static let buttonAlert = "Ok"
+    
+    static let deleteButtonImage = "trash"
+    static let deleteButtonTitle = "Delete"
+    
+    
 }
