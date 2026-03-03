@@ -6,6 +6,7 @@ struct HabitListView: View {
     @State private var selectedDate = Date()
     @State private var showingCreateHabit = false
     @State private var showFutureDateAlert = false
+    @State private var showConfetti = false
 
     
     var body: some View {
@@ -23,6 +24,11 @@ struct HabitListView: View {
                         Task {
                             showFutureDateAlert = await vm.updateHabit(habitId: habit.id.uuidString, habit: habit, date: selectedDate)
                             await vm.removeNotificationFromDay(identifier: habit.habitsID.uuidString, day: habit.dayCount)
+                            
+                            let wasCompleted = habit.isCompletedToday
+                            if !wasCompleted && !showFutureDateAlert {
+                                triggerConfetti()
+                            }
                         }
                     })
                     .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 0))
@@ -49,6 +55,7 @@ struct HabitListView: View {
 
         }
         .padding()
+        .confetti(isActive: $showConfetti)
         .onAppear {
             vm.fetchHabits(date: selectedDate)
             Task {
@@ -91,6 +98,13 @@ struct HabitListView: View {
                     .foregroundStyle(.black)
                     .font(.fontSystem(size: 16, weight: .semibold))
             }
+        }
+    }
+    
+    private func triggerConfetti() {
+        showConfetti = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+            showConfetti = false
         }
     }
 }

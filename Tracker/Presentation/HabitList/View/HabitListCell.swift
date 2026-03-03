@@ -1,6 +1,7 @@
 
 
 import SwiftUI
+import UIKit
 
 struct HabitListCell: View {
 
@@ -8,6 +9,7 @@ struct HabitListCell: View {
     let action: () -> Void
 
     @State private var pressed = false
+    @State private var feedbackGenerator = UINotificationFeedbackGenerator()
 
     var body: some View {
         ZStack {
@@ -43,6 +45,11 @@ struct HabitListCell: View {
             runSpring()
             action()
         }
+        .onChange(of: habit.isCompletedToday) { newValue in
+            if newValue {
+                triggerSuccessFeedGenerator()
+            }
+        }
     }
 
     private func runSpring() {
@@ -53,6 +60,10 @@ struct HabitListCell: View {
         }
 
     }
+
+    private func triggerSuccessFeedGenerator() {
+        feedbackGenerator.notificationOccurred(.success)
+    }
 }
 
 
@@ -62,3 +73,4 @@ struct HabitListCell: View {
     }
     .frame(height: 60)
 }
+
