@@ -5,6 +5,8 @@ struct HabitListView: View {
     @StateObject var vm: HabitListViewModel
     @State private var selectedDate = Date()
     @State private var showingCreateHabit = false
+    @State private var showingEditHabit = false
+    @State private var selectedHabitForEdit: Habit?
     @State private var showFutureDateAlert = false
     @State private var showConfetti = false
 
@@ -33,7 +35,7 @@ struct HabitListView: View {
                     })
                     .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 0))
                     .listRowSeparator(.hidden)
-                    .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                    .swipeActions(edge: .trailing, allowsFullSwipe: false) {
                         Button(role: .destructive) {
                             let id = habit.habitsID.uuidString
                             vm.deleteHabit(id: id, date: selectedDate)
@@ -44,6 +46,18 @@ struct HabitListView: View {
                                     .font(.caption)
                             }
                         }
+                        
+                        Button {
+                            selectedHabitForEdit = habit
+                            showingEditHabit = true
+                        } label: {
+                            VStack {
+                                Image(systemName: HabitListInfo.editButtonImage)
+                                Text(HabitListInfo.editButtonTitle)
+                                    .font(.caption)
+                            }
+                        }
+                        .tint(.blue)
                     }
                 }
             }
@@ -70,6 +84,13 @@ struct HabitListView: View {
                 showingCreateHabit = false
                 vm.fetchHabits(date: selectedDate)
             })
+        }
+        .sheet(isPresented: $showingEditHabit) {
+            if let habit = selectedHabitForEdit {
+                EditHabitView(vm: Assembly.createEditHabitViewModel(for: habit), onSave: {
+                    vm.fetchHabits(date: selectedDate)
+                })
+            }
         }
         .alert(HabitListInfo.titleAlert,
                isPresented: $showFutureDateAlert) {
@@ -124,5 +145,6 @@ fileprivate struct HabitListInfo {
     static let deleteButtonImage = "trash"
     static let deleteButtonTitle = "Delete"
     
-    
+    static let editButtonImage = "pencil"
+    static let editButtonTitle = "Edit"
 }

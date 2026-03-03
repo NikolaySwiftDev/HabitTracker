@@ -63,6 +63,36 @@ struct Assembly {
         
         return viewModel
     }
+    
+    static func createEditHabitViewModel(for habit: Habit) -> EditHabitViewModel {
+        
+        //Core Data
+        let context = PersistaintController()
+        let dataSource = CoreDataManager(context: context.persistentContainer.viewContext)
+        let repository = HabitRepositoryImplement(dataSource: dataSource)
+        
+        let editHabitUseCase = EditHabitImplement(repository: repository)
+        let fetchHabitsUseCase = FetchHabitsImplement(repository: repository)
+        
+        //Notification
+        let notificationDataSource = NotificationManager()
+        let notificationDataSourceRepository = NotificationRepositoryImplement(dataSource: notificationDataSource)
+        let requestNotificationUseCase = RequestNotificationImplement(repository: notificationDataSourceRepository)
+        let deleteNotificationUseCase = DeleteNotificationImplement(repository: notificationDataSourceRepository)
+        let createNotificationUseCase = CreateNotificationImplement(repository: notificationDataSourceRepository)
+        
+        //View Model
+        let viewModel = EditHabitViewModel(
+            habit: habit,
+            editHabitUseCase: editHabitUseCase,
+            requestNotificationUseCase: requestNotificationUseCase,
+            deleteNotificationUseCase: deleteNotificationUseCase,
+            createNotificationUseCase: createNotificationUseCase,
+            fetchHabitsUseCase: fetchHabitsUseCase
+        )
+        
+        return viewModel
+    }
 }
 
 
